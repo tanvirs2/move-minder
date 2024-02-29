@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <h1 class="green">💖 My Work Station!</h1>
+    <p class="green">Change node version.</p>
+
+
+    <div id="node_version">
+      <label class="radio-btn">
+        <input type="radio" value="16" name="node_version">NodeJS 16
+      </label>
+
+      <br>
+
+      <label class="radio-btn">
+        <input type="radio" value="20" name="node_version">NodeJS 20
+      </label>
+    </div>
+
+    <div style="position: absolute; bottom: 3%; width: 100%">
+      <div style="display: flex; justify-content: space-between;" id="btn-area">
+
+        <div style="
+        width: 4rem;
+        cursor: pointer;
+        color: #008cff;
+        font-weight: bolder;
+        display: none;
+      " id="app-btn">
+          <img style="height: 50px" src="./assets/imgs/laragon.png" alt="Run laragon app">
+          <p style="text-transform: capitalize">Laragon</p>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!--<p id="myText">Let's get started :)</p>
+    <button id="myBtn">Change Text</button>
+    <button onclick="testFunc()">Explorer</button>-->
+
+
+    <!--<script>
+
+      const node_version = document.querySelector("#node_version");
+
+      node_version.addEventListener('change', function (evt) {
+        console.dir(evt.target.value.nu)
+      });
+
+    </script>-->
+
+    <script>
+
+      const appArray = [
+        {
+          name: 'laragon',
+          logo: 'laragon.png',
+          color: '#008cff',
+        },
+        {
+          name: 'sourcetree',
+          logo: 'sourcetree.png',
+          color: '#003cff',
+        },
+        {
+          name: 'phpstorm',
+          logo: 'phpstorm.png',
+          color: '#e600ff',
+        },
+        {
+          name: 'clock',
+          logo: 'clock.png',
+          color: '#656565',
+        },
+        {
+          name: 'note',
+          logo: 'note.png',
+          color: '#e1b800',
+        },
+        {
+          name: 'keyboard',
+          logo: 'aula.jpeg',
+          color: '#00f7ff',
+        }
+      ];
+
+      /*let bridges = appArray.map(item=> {
+        //console.log(item)
+        return {
+          [item.name]: () => `${item.name}_app_run`,
+        }
+      });
+
+      let yy = '';
+
+      bridges = appArray.reduce((prev, curr) => {
+        let currModify = {[curr.name]: () => `${curr.name}_app_run`};
+        return {...prev, ...currModify};
+      } , {});*/
+
+      //console.log(bridges)
+      //console.log(Object.assign({}, ...bridges))
+
+      const btnArea = document.querySelector("#btn-area");
+      const appBtn = document.querySelector("#app-btn");
+
+      //console.log({appBtn})
+
+      appArray.forEach(({name, logo, color})=>{
+        //console.log(a, btnArea);
+        const cloneAppBtn = appBtn.cloneNode(true);
+
+        cloneAppBtn.style.display = 'block'
+        cloneAppBtn.style.color = color
+
+        cloneAppBtn.querySelector('img').src = `./assets/imgs/${logo}`
+        cloneAppBtn.querySelector('p').innerText = name
+        cloneAppBtn.id = name
+
+        btnArea.appendChild(cloneAppBtn);
+      });
+
+    </script>
+
+    <script src="./js/btn.js"></script>
+  </body>
+</html>
