@@ -1,29 +1,110 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1 class="green">💖 My Work Station!</h1>
-    <p class="green">Change node version.</p>
 
+    <link rel="stylesheet" href="css/index.css"/>
 
-    <div id="node_version">
-      <label class="radio-btn">
-        <input type="radio" value="16" name="node_version">NodeJS 16
-      </label>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+<h1 class="green">💖 My Work Station!</h1>
 
-      <br>
+<div style="display: flex; justify-content: space-between;">
 
-      <label class="radio-btn">
-        <input type="radio" value="20" name="node_version">NodeJS 20
-      </label>
+    <div><p class="green">Change node version.</p>
+
+        <div id="node_version">
+            <label class="radio-btn">
+                <input type="radio" value="16" name="node_version">NodeJS 16
+            </label>
+
+            <br>
+
+            <label class="radio-btn">
+                <input type="radio" value="20" name="node_version">NodeJS 20
+            </label>
+        </div>
     </div>
 
-    <div style="position: absolute; bottom: 3%; width: 100%">
-      <div style="display: flex; justify-content: space-between;" id="btn-area">
+    <div>
+        <h1 id="demo"></h1>
+
+        <circle-progress value="50" max="100"></circle-progress>
+
+        <!--<main class="container flex flex-col lg:flex-row gap-8 lg:gap-10">
+            <article
+                    class="relative w-48 h-48 lg:w-56 lg:h-56 xl:w-60 xl:h-60 inline-grid place-content-center text-center border-8 border-[#191919] rounded-full before:rounded-full after:rounded-full after:absolute before:absolute before:-inset-2 pie no-round"
+                    style="&#45;&#45;p: 20; &#45;&#45;c: rgba(253, 41, 112, 1)"
+            >
+				<span
+                        class="absolute inset-0 w-full h-full before:absolute before:inset-0 before:w-7 before:h-7 before:left-[4.5rem] lg:before:left-24 before:-top-4 before:bg-hours before:rounded-full transition-all duration-500 dot"
+                        id="dot-hour"
+                ></span>
+                <h3
+                        class="font-bold text-base lg:text-lg xl:text-xl flex flex-col gap-1 lg:gap-3"
+                >
+					<span
+                            class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                            id="hour"
+                    ></span>
+
+                    <span>HOURS</span>
+                </h3>
+            </article>
+            <article
+                    class="relative w-48 h-48 lg:w-56 lg:h-56 xl:w-60 xl:h-60 inline-grid place-content-center text-center border-8 border-[#191919] rounded-full before:rounded-full after:rounded-full after:absolute before:absolute before:-inset-2 pie no-round"
+                    style="&#45;&#45;p: 20; &#45;&#45;c: rgba(252, 230, 0, 1)"
+            >
+				<span
+                        class="absolute inset-0 w-full h-full before:absolute before:inset-0 before:w-7 before:h-7 before:left-[4.5rem] lg:before:left-24 before:-top-4 before:bg-minutes before:rounded-full transition-all duration-500 dot"
+                        id="dot-minute"
+                ></span>
+                <h3
+                        class="font-bold text-base lg:text-lg xl:text-xl flex flex-col gap-1 lg:gap-3"
+                >
+					<span
+                            class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                            id="minutes"
+                    ></span>
+
+                    <span>MINUTES</span>
+                </h3>
+            </article>
+            <article
+                    class="relative w-48 h-48 lg:w-56 lg:h-56 xl:w-60 xl:h-60 inline-grid place-content-center text-center border-8 border-[#191919] rounded-full before:rounded-full after:rounded-full after:absolute before:absolute before:-inset-2 pie no-round"
+                    style="&#45;&#45;p: 20; &#45;&#45;c: rgba(6, 252, 63, 1)"
+            >
+				<span
+                        class="absolute inset-0 w-full h-full before:absolute before:inset-0 before:w-7 before:h-7 before:left-[4.5rem] lg:before:left-24 before:-top-4 before:bg-seconds before:rounded-full transition-all duration-500 dot"
+                        id="dot-second"
+                ></span>
+                <h3
+                        class="font-bold text-base lg:text-lg xl:text-xl flex flex-col gap-1 lg:gap-3"
+                >
+					<span
+                            class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                            id="seconds"
+                    ></span>
+
+                    <span>SECONDS</span>
+                </h3>
+            </article>
+            <article
+                    class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl lg:relative absolute right-5"
+                    id="ampm"
+            >
+                PM
+            </article>
+        </main>-->
+    </div>
+
+</div>
+
+
+<div style="position: absolute; bottom: 3%; width: 100%">
+    <div style="display: flex; justify-content: space-between;" id="btn-area">
 
         <div style="
         width: 4rem;
@@ -32,87 +113,73 @@
         font-weight: bolder;
         display: none;
       " id="app-btn">
-          <img style="height: 50px" src="./assets/imgs/laragon.png" alt="Run laragon app">
-          <p style="text-transform: capitalize">Laragon</p>
+            <img style="height: 50px" src="./assets/imgs/laragon.png" alt="Run laragon app">
+            <p style="text-transform: capitalize">Laragon</p>
         </div>
 
-      </div>
     </div>
+</div>
 
+<script src="js/circle-progress.min.js" type="module"></script>
 
-    <!--<p id="myText">Let's get started :)</p>
-    <button id="myBtn">Change Text</button>
-    <button onclick="testFunc()">Explorer</button>-->
+<script>
 
-
-    <!--<script>
-
-      const node_version = document.querySelector("#node_version");
-
-      node_version.addEventListener('change', function (evt) {
-        console.dir(evt.target.value.nu)
-      });
-
-    </script>-->
-
-    <script>
-
-      const appArray = [
+    const appArray = [
         {
-          name: 'laragon',
-          logo: 'laragon.png',
-          color: '#008cff',
+            name: 'laragon',
+            logo: 'laragon.png',
+            color: '#008cff',
         },
         {
-          name: 'sourcetree',
-          logo: 'sourcetree.png',
-          color: '#003cff',
+            name: 'sourcetree',
+            logo: 'sourcetree.png',
+            color: '#003cff',
         },
         {
-          name: 'phpstorm',
-          logo: 'phpstorm.png',
-          color: '#e600ff',
+            name: 'phpstorm',
+            logo: 'phpstorm.png',
+            color: '#e600ff',
         },
         {
-          name: 'clock',
-          logo: 'clock.png',
-          color: '#656565',
+            name: 'clock',
+            logo: 'clock.png',
+            color: '#656565',
         },
         {
-          name: 'note',
-          logo: 'note.png',
-          color: '#e1b800',
+            name: 'note',
+            logo: 'note.png',
+            color: '#e1b800',
         },
         {
-          name: 'keyboard',
-          logo: 'aula.jpeg',
-          color: '#00f7ff',
+            name: 'AULA',
+            logo: 'aula.jpeg',
+            color: '#00f7ff',
         }
-      ];
+    ];
 
-      /*let bridges = appArray.map(item=> {
-        //console.log(item)
-        return {
-          [item.name]: () => `${item.name}_app_run`,
-        }
-      });
+    /*let bridges = appArray.map(item=> {
+      //console.log(item)
+      return {
+        [item.name]: () => `${item.name}_app_run`,
+      }
+    });
 
-      let yy = '';
+    let yy = '';
 
-      bridges = appArray.reduce((prev, curr) => {
-        let currModify = {[curr.name]: () => `${curr.name}_app_run`};
-        return {...prev, ...currModify};
-      } , {});*/
+    bridges = appArray.reduce((prev, curr) => {
+      let currModify = {[curr.name]: () => `${curr.name}_app_run`};
+      return {...prev, ...currModify};
+    } , {});*/
 
-      //console.log(bridges)
-      //console.log(Object.assign({}, ...bridges))
+    //console.log(bridges)
+    //console.log(Object.assign({}, ...bridges))
 
-      const btnArea = document.querySelector("#btn-area");
-      const appBtn = document.querySelector("#app-btn");
+    const btnArea = document.querySelector("#btn-area");
+    const appBtn = document.querySelector("#app-btn");
 
-      //console.log({appBtn})
+    //console.log({appBtn})
 
-      appArray.forEach(({name, logo, color})=>{
+    appArray.forEach(({name, logo, color}) => {
         //console.log(a, btnArea);
         const cloneAppBtn = appBtn.cloneNode(true);
 
@@ -124,10 +191,10 @@
         cloneAppBtn.id = name
 
         btnArea.appendChild(cloneAppBtn);
-      });
+    });
 
-    </script>
+</script>
 
-    <script src="./js/btn.js"></script>
-  </body>
+<script src="./js/btn.js"></script>
+</body>
 </html>

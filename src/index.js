@@ -1,7 +1,14 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 
-const subProcess = require('child_process')
+const subProcess = require('child_process');
+//const CircleProgress = require('js-circle-progress');
+//var ProgressBar = require('progressbar.js')
+
+// Create an instance of CircleProgress element
+//const cp = CircleProgress();
+
+
 
 
 function nodeVersionChangeHandler(data) {
@@ -11,19 +18,54 @@ function nodeVersionChangeHandler(data) {
   ], { shell: true, stdio: 'inherit' })
 }
 
-function laragon_app_run() {
-  subProcess.spawn('cd c:/laragon && laragon', { shell: true, stdio: 'inherit' })
-}
+ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
 
+const appCmdArray = [
+  {
+    name: 'laragon',
+    cmd: 'start "" "%HOMEDRIVE%\\laragon\\laragon.exe"',
+  },
+  {
+    name: 'sourcetree',
+    cmd: 'start "" "%LocalAppData%\\SourceTree\\SourceTree.exe"',
+  },
+  {
+    name: 'phpstorm',
+    cmd: 'start "" "%ProgramFiles%\\JetBrains\\PhpStorm 2023.2.2\\bin\\phpstorm64.exe"',
+  },
+  {
+    name: 'clock',
+    cmd: 'start shell:appsfolder\\Microsoft.WindowsAlarms_8wekyb3d8bbwe!App',
+  },
+  {
+    name: 'note',
+    cmd: 'start shell:appsfolder\\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe!App',
+  },
+  {
+    name: 'AULA',
+    cmd: 'start "" "C:\\Program Files (x86)\\GamingMouse\\AULA F2088 Pro Gaming Keyboard\\ShinetekTools.exe"', //Microsoft.WindowsAlarms_10.1506.19010.0_x64_8wekyb3d8bbwe
+  }
+];
+
+appCmdArray.forEach(({name, cmd})=>{
+  ipcMain.on(`${name}_app_run`, (event, data)=>{
+    subProcess.spawn(cmd, { shell: true, stdio: 'inherit' })
+  })
+})
+
+
+/*function laragon_app_run() {
+  subProcess.spawn('start "" "%HOMEDRIVE%\\laragon\\laragon.exe"', { shell: true, stdio: 'inherit' })
+}*/
+/*
 function sourcetree_app_run() {
-  subProcess.spawn('start "" "%LocalAppData%\\SourceTree\\SourceTree.exe" -f "%cd%"', { shell: true, stdio: 'inherit' })
-}
+  subProcess.spawn('start "" "%LocalAppData%\\SourceTree\\SourceTree.exe"', { shell: true, stdio: 'inherit' })
+}*/
 
 
 //ipcMain.on("button-clicked", (event, data) => console.log(data))
-ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
-ipcMain.on("laragon_app_run", laragon_app_run)
-ipcMain.on("sourcetree_app_run", sourcetree_app_run)
+/*ipcMain.on("laragon_app_run", laragon_app_run)
+ipcMain.on("sourcetree_app_run", sourcetree_app_run)*/
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -45,7 +87,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

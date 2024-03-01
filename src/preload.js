@@ -24,7 +24,7 @@ const appArray = [
         logo: 'note.png',
     },
     {
-        name: 'keyboard',
+        name: 'AULA',
         logo: 'aula.jpeg',
     }
 ];
