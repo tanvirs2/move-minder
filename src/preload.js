@@ -46,6 +46,8 @@ contextBridge.exposeInMainWorld("electron", {
     //loadExplorer: () => ipcRenderer.send('loadExplorer'),
     //my_send: (channel, payload) => ipcRenderer.send(channel, payload),
     nodeVersionChange: (payload) => ipcRenderer.send('nodeVersionChangeRequest', payload),
+    minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
+    undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
     //laragon_app_run: () => ipcRenderer.send('laragon_app_run'),
     ...bridges
 });

@@ -8,8 +8,8 @@ const subProcess = require('child_process');
 // Create an instance of CircleProgress element
 //const cp = CircleProgress();
 
-
-
+let minimizeCMD = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.minimizeAll() }"';
+let undoMinimizeAll = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.UndoMinimizeAll() }"';
 
 function nodeVersionChangeHandler(data) {
   subProcess.spawn('nvm', [
@@ -19,6 +19,8 @@ function nodeVersionChangeHandler(data) {
 }
 
 ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
+ipcMain.on("minimizeCMD", (event, data) => subProcess.spawn(minimizeCMD, { shell: true, stdio: 'inherit' }))
+ipcMain.on("undoMinimizeAll", (event, data) => subProcess.spawn(undoMinimizeAll, { shell: true, stdio: 'inherit' }))
 
 const appCmdArray = [
   {
