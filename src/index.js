@@ -18,7 +18,9 @@ function nodeVersionChangeHandler(data) {
   ], { shell: true, stdio: 'inherit' })
 }
 
+
 ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
+//ipcMain.on("timeProgress", (event, data) => timeProgress(data))
 ipcMain.on("minimizeCMD", (event, data) => subProcess.spawn(minimizeCMD, { shell: true, stdio: 'inherit' }))
 ipcMain.on("undoMinimizeAll", (event, data) => subProcess.spawn(undoMinimizeAll, { shell: true, stdio: 'inherit' }))
 
@@ -84,6 +86,9 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+
+  ipcMain.on("timeProgress", (event, data) => mainWindow.setProgressBar(1-data))
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));

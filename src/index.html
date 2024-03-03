@@ -9,7 +9,12 @@
     <script src="js/app.js" defer></script>
 </head>
 <body>
-<h1 class="green">💖 My Work Station!</h1>
+
+<div style="display: flex; justify-content: space-between">
+    <h1 class="green">💖 My Work Station!</h1>
+    <h1 style="color: green"> ⏱️ <span id="demo">25m 00s</span></h1>
+</div>
+
 
 <div style="display: flex; justify-content: space-between;">
 
@@ -28,13 +33,22 @@
         </div>
     </div>
 
-    <div>
-        <h1 id="demo" style="color: green"></h1>
+    <div style="display: flex; flex-direction: column; align-items: center">
 
         <div id="focus-area" style="background-size: cover">
-            <circle-progress value="50" max="100"></circle-progress>
+            <circle-progress value="100" max="100" text-format="none" ></circle-progress>
         </div>
 
+        <div style="zoom: .4">
+            <div class="botón" id="play">
+                <div class="fondo" x="0" y="0" width="200" height="200"></div>
+                <div class="icono" width="200" height="200">
+                    <div class="parte izquierda" x="0" y="0" width="200" height="200" fill="#fff"></div>
+                    <div class="parte derecha" x="0" y="0" width="200" height="200" fill="#fff"></div>
+                </div>
+                <div class="puntero"></div>
+            </div>
+        </div>
     </div>
 
 </div>
