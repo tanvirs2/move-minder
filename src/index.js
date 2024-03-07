@@ -124,7 +124,7 @@ const createWindow = () => {
   //console.log({mainWindow: mainWindow.webContents})
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   /*setTimeout(()=>{
     //mainWindow.webContents.send('data-channel', { message: 'Hello from Main!' });
 
