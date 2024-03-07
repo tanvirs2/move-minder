@@ -22,6 +22,8 @@ body {
   border-radius: 3px;
   color: #206f01;
   cursor: pointer;
+  width: 130px;
+  text-wrap: nowrap;
 }
 
 

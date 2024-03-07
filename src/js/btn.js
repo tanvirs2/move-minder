@@ -16,11 +16,58 @@ function replaceText(selector, text) {
     if (element) element.innerText = text
 }*/
 
-const node_version = document.querySelector("#node_version");
+const node_version = document.querySelector("#node_list");
 
 node_version.addEventListener('change', function (evt) {
     window.electron.nodeVersionChange({ nodeVersionNumber: evt.target.value })
 });
+
+window.electron?.nodeVersionList().then(nodes=>{
+    let lists = nodes.split("\n").filter(item => !!item);
+
+    let radioBtnList = '';
+
+    lists.forEach(item=>{
+        radioBtnList += radioBtn(item);
+    })
+
+    node_list.innerHTML = radioBtnList;
+})
+
+
+
+let node_list = document.querySelector("#node_list");
+
+
+
+let radioBtn = (name)=>{
+
+    let active = false;
+    if (name.search(/\*/) > 0) {
+
+        active = true;
+        name = name.replace(/\(.+/, '');
+        name = name.replace('*', '');
+    }
+    //console.log(active)
+
+    //name = name.replace(/\.\d+$/, '');
+
+
+    return (
+        `<label class="radio-btn">
+           <input type="radio" value="${name}" ${active && 'checked'} name="node_version">NodeJS ${name}
+         </label>
+         <br>`
+    );
+}
+
+
+
+//let div = document.createElement('div');
+
+//node_list.appendChild(div);
+//node_list.innerHTML = '<div>1</div>';
 
 
 

@@ -36,6 +36,22 @@ let restAndFocusToggle = true;*/
 
 //const timeManage = timeManagement(focus, rest);
 
+
+window.addEventListener('DOMContentLoaded', () => {
+	/*window.electron.getSettings().then(a=>{
+		console.log(a)
+	})*/
+
+	/*window.electron.nodeVersionList().then(a=>{
+		console.log(a)
+	})*/
+
+	/*ipcRenderer.on('data-channel', (event, arg) => {
+		alert('ddd')
+		console.log(arg); // Output: "Hello from Main!"
+	});*/
+});
+
 function minuteToMillisecond(minute) {
 	let sixtyMillisecond = 60;
 	let oneMinute = sixtyMillisecond * 1000;

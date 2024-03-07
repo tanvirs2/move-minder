@@ -49,6 +49,23 @@ contextBridge.exposeInMainWorld("electron", {
     minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
     undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
     timeProgress: (payload) => ipcRenderer.send('timeProgress', payload),
+    //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
+    getSettings: () => ipcRenderer.invoke('getSettings'),
+    nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
     //laragon_app_run: () => ipcRenderer.send('laragon_app_run'),
     ...bridges
 });
+
+/*
+window.addEventListener('DOMContentLoaded', () => {
+    setInterval(()=>{
+        //mainWindow.webContents.send('data-channel', { message: 'Hello from Main!' });
+        //let tt = window.electron.getSettings;
+        console.log(window.electron.timeProgress)
+    }, 1000)
+
+    ipcRenderer.on('data-channel', (event, arg) => {
+        alert('ddd')
+        console.log(arg); // Output: "Hello from Main!"
+    });
+});*/

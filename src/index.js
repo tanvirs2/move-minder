@@ -2,11 +2,32 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 
 const subProcess = require('child_process');
+const {exec} = require("child_process");
 //const CircleProgress = require('js-circle-progress');
 //var ProgressBar = require('progressbar.js')
 
 // Create an instance of CircleProgress element
 //const cp = CircleProgress();
+
+ipcMain.handle('getSettings', () => {
+  return 'abcdef'
+})
+
+const nodeVersionListPromise = () => {
+  return new Promise((resolve, reject)=>{
+    exec('nvm list', (error, stdout, stderr)=>{
+      //console.log({stdout})
+      /*ipcMain.on("node-version-list", (event, data) => {
+        console.log('log:: node-version-list')
+      })*/
+      resolve(stdout);
+    })
+  });
+};
+
+ipcMain.handle('nodeVersionList', async () => {
+  return await nodeVersionListPromise()
+})
 
 let minimizeCMD = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.minimizeAll() }"';
 let undoMinimizeAll = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.UndoMinimizeAll() }"';
@@ -17,6 +38,8 @@ function nodeVersionChangeHandler(data) {
     data.nodeVersionNumber
   ], { shell: true, stdio: 'inherit' })
 }
+
+
 
 
 ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
@@ -93,8 +116,20 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
+
+
+
+  //mainWindow.webContents.executeJavaScript(console.log(mainWindow.webContents));
+
+  //console.log({mainWindow: mainWindow.webContents})
+
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
+  /*setTimeout(()=>{
+    //mainWindow.webContents.send('data-channel', { message: 'Hello from Main!' });
+
+  }, 3000)*/
+
 };
 
 // This method will be called when Electron has finished
