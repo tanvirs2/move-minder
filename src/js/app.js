@@ -62,6 +62,9 @@ let focusArea = document.querySelector("#focus-area");
 let play = document.querySelector("#play");
 let fondo_btn = play.querySelector(".fondo");
 let demo = document.getElementById("demo");
+focusArea.style.backgroundSize = '5rem';
+focusArea.style.backgroundRepeat = 'no-repeat';
+focusArea.style.backgroundPosition = 'center';
 
 let worker;
 let playToggle = false;
@@ -70,7 +73,9 @@ play.onclick = function () {
 	playToggle = !playToggle;
 	if (playToggle) {
 		fondo_btn.style.background = '#007300'
+		focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")'
 	} else {
+		focusArea.style.backgroundImage = ''
 		fondo_btn.style.background = '#00d200'
 	}
 	worker.postMessage({play: playToggle});
@@ -92,7 +97,7 @@ function focusHandle() {
 	audioPlay('./assets/sounds/clock-alarm.mp3');
 	window.electron?.undoMinimizeAll()
 	demo.style.color = '#0d8c00';
-	focusArea.style.backgroundImage = ''
+	focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")'
 }
 
 function restHandle() {
@@ -103,7 +108,7 @@ function restHandle() {
 	audioPlay('./assets/sounds/piano.mp3');
 	window.electron?.minimizeCMD()
 	demo.style.color = '#a6cca3';
-	focusArea.style.backgroundImage = 'url("./assets/imgs/hot-coffee.gif")'
+	focusArea.style.backgroundImage = 'url("./assets/imgs/tea-cup-coffee-svgrepo-com.svg")'
 }
 
 let circleProgress = document.getElementsByTagName("circle-progress");
@@ -123,9 +128,9 @@ worker.onmessage = function (event) {
 	circleProgress[0].value = progress;
 	circleProgress[0].max = 100;
 
-	circleProgress[0].textFormat = function (){
-		return timer
-	};
+	/*circleProgress[0].textFormat = function (){
+		return ''
+	};*/
 
 	demo.innerHTML = timer;
 
