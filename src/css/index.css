@@ -9,6 +9,38 @@ body {
   box-sizing: border-box;
 }
 
+
+
+
+
+
+.fun-btn {
+    background: #00d200;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.fun-btn:hover {
+    background: #027f02;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .green {
   color: #277727;
 }

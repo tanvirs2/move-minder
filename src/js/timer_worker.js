@@ -34,7 +34,7 @@ self.onmessage = function (event) {
     }
 }
 
-
+const addZero = (num) => ('0' + num).slice(-2)
 
 function timeStart(){
     intvStart = setInterval(()=>{
@@ -43,7 +43,6 @@ function timeStart(){
 
         //('0' + minutes).slice(-2)
 
-        const addZero = (num) => ('0' + num).slice(-2)
 
         self.postMessage({
             timer: addZero(minutes) + "m " + addZero(seconds) + "s ",

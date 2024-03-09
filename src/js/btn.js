@@ -17,6 +17,18 @@ function replaceText(selector, text) {
 }*/
 
 const node_version = document.querySelector("#node_list");
+const minimizeBtn = document.querySelector("#minimize-btn");
+const maximizeBtn = document.querySelector("#maximize-btn");
+
+function btnAction(selector, electronActionCallback, eventName = 'click') {
+    const selectorElm = document.querySelector(selector);
+    selectorElm.addEventListener(eventName, function (evt) {
+        electronActionCallback();
+    });
+}
+
+btnAction("#minimize-btn", window.electron?.minimizeCMD);
+btnAction("#maximize-btn", window.electron?.undoMinimizeAll);
 
 node_version.addEventListener('change', function (evt) {
     window.electron.nodeVersionChange({ nodeVersionNumber: evt.target.value })
@@ -61,6 +73,7 @@ let radioBtn = (name)=>{
          <br>`
     );
 }
+
 
 
 
