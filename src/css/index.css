@@ -23,11 +23,18 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.5s;
+    transition: all 0.1s;
+    color: #c0c0c0;
+    box-shadow: 0px 30px 30px currentColor;
+    border: 1px solid #90e344;
 }
 
 .fun-btn:hover {
     background: #027f02;
+}
+.fun-btn:active {
+    color: #6e6e6e;
+    box-shadow: 0px 3px 10px currentColor;
 }
 
 

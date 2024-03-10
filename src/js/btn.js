@@ -16,13 +16,19 @@ function replaceText(selector, text) {
     if (element) element.innerText = text
 }*/
 
+function audioPlay(src) {
+    var audio = new Audio(src);
+    if (window.electron) {
+        audio.play();
+    }
+}
+
 const node_version = document.querySelector("#node_list");
-const minimizeBtn = document.querySelector("#minimize-btn");
-const maximizeBtn = document.querySelector("#maximize-btn");
 
 function btnAction(selector, electronActionCallback, eventName = 'click') {
     const selectorElm = document.querySelector(selector);
     selectorElm.addEventListener(eventName, function (evt) {
+        audioPlay('./assets/sounds/notifications-sound.mp3');
         electronActionCallback();
     });
 }
