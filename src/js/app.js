@@ -7,32 +7,7 @@
 
 //var distance_ = minuteToMillisecond(interval);
 
-/*const timeManagement = (focus, rest) => {
-	let focusMinute = focus;
-	let restMinute = rest;
 
-	let focusArea = document.querySelector("#focus-area");
-
-	function focusHandle() {
-		var audio = new Audio('./assets/sounds/clock-alarm.mp3');
-		window.electron.undoMinimizeAll()
-		audio.play();
-		focusArea.style.backgroundImage = ''
-		return minuteToMillisecond(focusMinute);
-	}
-
-	function restHandle() {
-		var audio = new Audio('./assets/sounds/piano.mp3');
-		window.electron.minimizeCMD()
-		focusArea.style.backgroundImage = 'url("./assets/imgs/hot-coffee.gif")'
-		audio.play();
-		return minuteToMillisecond(restMinute);
-	}
-
-	return {focusHandle, restHandle}
-}
-
-let restAndFocusToggle = true;*/
 
 //const timeManage = timeManagement(focus, rest);
 
@@ -62,9 +37,11 @@ let focusArea = document.querySelector("#focus-area");
 let play = document.querySelector("#play");
 let fondo_btn = play.querySelector(".fondo");
 let demo = document.getElementById("demo");
+focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
 focusArea.style.backgroundSize = '5rem';
 focusArea.style.backgroundRepeat = 'no-repeat';
 focusArea.style.backgroundPosition = 'center';
+focusArea.style.transition = 'background-image 1s';
 
 let worker;
 let playToggle = false;
@@ -75,7 +52,7 @@ play.onclick = function () {
 		fondo_btn.style.background = '#007300'
 		focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")'
 	} else {
-		focusArea.style.backgroundImage = ''
+		focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
 		fondo_btn.style.background = '#00d200'
 	}
 	worker.postMessage({play: playToggle});
