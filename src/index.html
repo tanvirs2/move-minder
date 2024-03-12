@@ -34,9 +34,25 @@
 
     <div style="display: flex; flex-direction: column; align-items: center">
 
-        <div id="focus-area" style="background-size: cover">
-            <circle-progress value="100" max="100" text-format="none" ></circle-progress>
+        <div>
+            <div style="zoom: .3; display: flex; justify-content: space-between">
+                <div class="fun-btn" style="background: #358535" id="time-decrease">
+                    <div style="width: 4rem; font-size: 3rem; font-weight: bolder">
+                        -5
+                    </div>
+                </div>
+                <div class="fun-btn" style="background: green" id="time-increase">
+                    <div style="width: 4rem; font-size: 3rem; font-weight: bolder">
+                        +5
+                    </div>
+                </div>
+            </div>
+
+            <div id="focus-area" style="background-size: cover">
+                <circle-progress value="100" max="100" text-format="none" ></circle-progress>
+            </div>
         </div>
+
 
         <div style="zoom: .4; display: flex">
 

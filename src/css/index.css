@@ -15,6 +15,7 @@ body {
 
 
 .fun-btn {
+    user-select: none;
     background: #00d200;
     border-radius: 50%;
     width: 110px;

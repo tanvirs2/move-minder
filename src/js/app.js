@@ -35,6 +35,8 @@ function minuteToMillisecond(minute) {
 
 let focusArea = document.querySelector("#focus-area");
 let play = document.querySelector("#play");
+let timeIncrease = document.querySelector("#time-increase");
+let timeDecrease = document.querySelector("#time-decrease");
 let fondo_btn = play.querySelector(".fondo");
 let demo = document.getElementById("demo");
 focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
@@ -46,6 +48,21 @@ focusArea.style.transition = 'background-image 1s';
 let worker;
 let playToggle = false;
 
+const timeModify = (time) => {
+	//time-decrease
+	//distance = minuteToMillisecond(interval + time);
+}
+
+timeIncrease.onclick = function () {
+	worker.postMessage({time: 5, timeModifyFound: true});
+}
+
+timeDecrease.onclick = function () {
+	worker.postMessage({time: -5, timeModifyFound: true});
+}
+
+timeModify();
+
 play.onclick = function () {
 	playToggle = !playToggle;
 	if (playToggle) {
@@ -55,7 +72,7 @@ play.onclick = function () {
 		focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
 		fondo_btn.style.background = '#00d200'
 	}
-	worker.postMessage({play: playToggle});
+	worker.postMessage({play: playToggle, playKeyFound: true});
 	this.classList.toggle('active');
 }
 
@@ -94,7 +111,11 @@ let circleProgress = document.getElementsByTagName("circle-progress");
 worker = new Worker('js/timer_worker.js');
 
 worker.onmessage = function (event) {
-	const {timer, focusToggle, distance, focus, rest} = event.data;
+	const {timer, focusToggle, distance, focus, rest, interval, timeModify} = event.data;
+	if (timeModify) {
+		demo.innerHTML = interval;
+		return 0;
+	}
 	let progress_0to1 = distance / minuteToMillisecond(focusToggle ? focus : rest);
 	let progress = 100 - Math.round(progress_0to1 * 100);
 
@@ -108,6 +129,7 @@ worker.onmessage = function (event) {
 	/*circleProgress[0].textFormat = function (){
 		return ''
 	};*/
+
 
 	demo.innerHTML = timer;
 
