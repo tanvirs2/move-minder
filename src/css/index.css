@@ -13,7 +13,7 @@ body {
 .time-modify-btn {
     cursor: pointer;
     text-align: center;
-    line-height: 1.9rem;
+    line-height: 1.6rem;
     background: #5be85b;
     width: 100%;
     height: 5vh;
@@ -24,12 +24,20 @@ body {
 }
 
 .time-modify-btn:active {
+    color: #fff;
     box-shadow: inset 0 0 7px green;
 }
 
 .time-modify-btn:hover {
     background: #56d056;
 }
+
+
+
+
+
+
+
 
 
 
