@@ -2,12 +2,12 @@ let interval = 25;
 let focus = interval;
 let rest = 5;
 
-let dev = false;
+let dev = true;
 
 if (dev) {
-    interval = .2;
+    interval = .5;
     focus = interval;
-    rest = .1;
+    rest = .25;
 }
 
 const minuteToMillisecond =(minute) => {

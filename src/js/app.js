@@ -105,6 +105,11 @@ function restHandle() {
 	focusArea.style.backgroundImage = 'url("./assets/imgs/tea-cup-coffee-svgrepo-com.svg")'
 }
 
+function timerSound() {
+	audioPlay('./assets/sounds/notifications-sound.mp3');
+
+}
+
 let circleProgress = document.getElementsByTagName("circle-progress");
 //console.log(circleProgress[0]);
 
@@ -130,6 +135,9 @@ worker.onmessage = function (event) {
 		return ''
 	};*/
 
+	if (timer.trim() === '00m 12s') {
+		timerSound();
+	}
 
 	demo.innerHTML = timer;
 
