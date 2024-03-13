@@ -106,7 +106,7 @@ function restHandle() {
 }
 
 function timerSound() {
-	audioPlay('./assets/sounds/notifications-sound.mp3');
+	audioPlay('./assets/sounds/timer.mp3');
 
 }
 
