@@ -67,10 +67,18 @@ timeModify();
 play.onclick = function () {
 	playToggle = !playToggle;
 
-	if (timerSoundRun && !playToggle) {
+	/*if (timerSoundRun && !playToggle) {
 		timerSoundRun.pause();
 	} else {
 		if (timerSoundRun && playToggle) {
+			timerSoundRun.play();
+		}
+	}*/
+
+	if (timerSoundRun) {
+		if (!playToggle) {
+			timerSoundRun.pause();
+		} else {
 			timerSoundRun.play();
 		}
 	}
