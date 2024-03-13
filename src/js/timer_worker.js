@@ -5,9 +5,9 @@ let rest = 5;
 let dev = false;
 
 if (dev) {
-    interval = .2;
+    interval = .5;
     focus = interval;
-    rest = .1;
+    rest = .25;
 }
 
 const minuteToMillisecond =(minute) => {

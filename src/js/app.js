@@ -46,6 +46,7 @@ focusArea.style.backgroundPosition = 'center';
 focusArea.style.transition = 'background-image 1s';
 
 let worker;
+let timerSoundRun;
 let playToggle = false;
 
 const timeModify = (time) => {
@@ -65,12 +66,21 @@ timeModify();
 
 play.onclick = function () {
 	playToggle = !playToggle;
-	if (playToggle) {
-		fondo_btn.style.background = '#007300'
-		focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")'
+
+	if (timerSoundRun && !playToggle) {
+		timerSoundRun.pause();
 	} else {
-		focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
-		fondo_btn.style.background = '#00d200'
+		if (timerSoundRun && playToggle) {
+			timerSoundRun.play();
+		}
+	}
+
+	if (playToggle) {
+		fondo_btn.style.background = '#007300';
+		focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")';
+	} else {
+		focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")';
+		fondo_btn.style.background = '#00d200';
 	}
 	worker.postMessage({play: playToggle, playKeyFound: true});
 	this.classList.toggle('active');
@@ -81,6 +91,7 @@ function audioPlay(src) {
 	if (window.electron) {
 		audio.play();
 	}
+	return audio;
 }
 
 function focusHandle() {
@@ -103,6 +114,10 @@ function restHandle() {
 	window.electron?.minimizeCMD()
 	demo.style.color = '#a6cca3';
 	focusArea.style.backgroundImage = 'url("./assets/imgs/tea-cup-coffee-svgrepo-com.svg")'
+}
+
+function timerSound() {
+	return audioPlay('./assets/sounds/timer.mp3');
 }
 
 let circleProgress = document.getElementsByTagName("circle-progress");
@@ -130,6 +145,9 @@ worker.onmessage = function (event) {
 		return ''
 	};*/
 
+	if (timer.trim() === '00m 12s') {
+		timerSoundRun = timerSound();
+	}
 
 	demo.innerHTML = timer;
 
