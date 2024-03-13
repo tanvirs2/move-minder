@@ -76,10 +76,10 @@ play.onclick = function () {
 	}*/
 
 	if (timerSoundRun) {
-		if (!playToggle) {
-			timerSoundRun.pause();
-		} else {
+		if (playToggle) {
 			timerSoundRun.play();
+		} else {
+			timerSoundRun.pause();
 		}
 	}
 

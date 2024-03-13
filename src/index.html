@@ -35,22 +35,22 @@
     <div style="display: flex; flex-direction: column; align-items: center">
 
         <div>
-            <div style="width: 100%; display: flex; color: green; margin-bottom: 3px">
-                <div class="time-modify-btn" style="border-radius: 30px 0 0 30px;"> &nbsp; </div>
-                <div class="time-modify-btn" style="border-radius: 0 30px 30px 0;"> &nbsp;</div>
+            <div style="width: 100%; display: flex; color: green; margin-bottom: 1rem">
+                <div class="time-modify-btn" id="time-decrease" style="border-radius: 30px 0 0 30px;"> -5 </div>
+                <div class="time-modify-btn" id="time-increase" style="border-radius: 0 30px 30px 0;"> +5 </div>
             </div>
-            <div style="zoom: .3; display: flex; justify-content: space-between">
-                <div class="fun-btn" style="background: #358535" id="time-decrease">
+            <!--<div style="zoom: .3; display: flex; justify-content: space-between">
+                <div class="fun-btn" style="background: #358535">
                     <div style="width: 4rem; font-size: 3rem; font-weight: bolder">
                         -5
                     </div>
                 </div>
-                <div class="fun-btn" style="background: green" id="time-increase">
+                <div class="fun-btn" style="background: green">
                     <div style="width: 4rem; font-size: 3rem; font-weight: bolder">
                         +5
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div id="focus-area" style="background-size: cover">
                 <circle-progress value="100" max="100" text-format="none" ></circle-progress>

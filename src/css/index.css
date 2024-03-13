@@ -11,6 +11,9 @@ body {
 
 
 .time-modify-btn {
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.9rem;
     background: #5be85b;
     width: 100%;
     height: 5vh;
