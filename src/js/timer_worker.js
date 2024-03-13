@@ -2,7 +2,7 @@ let interval = 25;
 let focus = interval;
 let rest = 5;
 
-let dev = true;
+let dev = false;
 
 if (dev) {
     interval = .5;
