@@ -1,4 +1,4 @@
-let interval = 25;
+let interval = 30;
 let focus = interval;
 let rest = 5;
 

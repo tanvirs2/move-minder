@@ -1,20 +1,4 @@
-/*function testFunc() {
-    window.electron.loadExplorer()
 
-    //window.theNameYouWant.send("channel-name", { someData: "Hello" })
-}
-
-// index.js
-const chgBtn = document.getElementById("myBtn")
-chgBtn.onclick = function () {
-    replaceText("myText", "no boom...")
-    window.electron.my_send("button-clicked", { someData: "Hello" })
-}
-
-function replaceText(selector, text) {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-}*/
 
 function audioPlay(src) {
     var audio = new Audio(src);
@@ -52,11 +36,7 @@ window.electron?.nodeVersionList().then(nodes=>{
     node_list.innerHTML = radioBtnList;
 })
 
-
-
 let node_list = document.querySelector("#node_list");
-
-
 
 let radioBtn = (name)=>{
 
@@ -67,10 +47,6 @@ let radioBtn = (name)=>{
         name = name.replace(/\(.+/, '');
         name = name.replace('*', '');
     }
-    //console.log(active)
-
-    //name = name.replace(/\.\d+$/, '');
-
 
     return (
         `<label class="radio-btn">
@@ -80,24 +56,6 @@ let radioBtn = (name)=>{
     );
 }
 
-
-
-
-//let div = document.createElement('div');
-
-//node_list.appendChild(div);
-//node_list.innerHTML = '<div>1</div>';
-
-
-
-/*
-
-const laragon_icon = document.querySelector("#laragon_icon");
-
-
-laragon_icon.addEventListener('click', function (evt) {
-    window.electron.laragon_app_run()
-});*/
 
 appArray.forEach(({name, logo}) => {
     const icon = document.querySelector(`#${name}`);

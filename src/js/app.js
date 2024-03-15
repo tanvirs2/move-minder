@@ -1,17 +1,5 @@
 
 
-//let interval = 22;
-
-//let focus = interval;
-//let rest = 5;
-
-//var distance_ = minuteToMillisecond(interval);
-
-
-
-//const timeManage = timeManagement(focus, rest);
-
-
 window.addEventListener('DOMContentLoaded', () => {
 	/*window.electron.getSettings().then(a=>{
 		console.log(a)
@@ -55,25 +43,23 @@ const timeModify = (time) => {
 }
 
 timeIncrease.onclick = function () {
+	if (timerSoundRun) {
+		timerSoundRun.pause();
+	}
 	worker.postMessage({time: 5, timeModifyFound: true});
 }
 
 timeDecrease.onclick = function () {
+	if (timerSoundRun) {
+		timerSoundRun.pause();
+	}
 	worker.postMessage({time: -5, timeModifyFound: true});
 }
 
-timeModify();
+//timeModify();
 
 play.onclick = function () {
 	playToggle = !playToggle;
-
-	/*if (timerSoundRun && !playToggle) {
-		timerSoundRun.pause();
-	} else {
-		if (timerSoundRun && playToggle) {
-			timerSoundRun.play();
-		}
-	}*/
 
 	if (timerSoundRun) {
 		if (playToggle) {
@@ -95,7 +81,7 @@ play.onclick = function () {
 }
 
 function audioPlay(src) {
-	var audio = new Audio(src);
+	let audio = new Audio(src);
 	if (window.electron) {
 		audio.play();
 	}
@@ -103,10 +89,6 @@ function audioPlay(src) {
 }
 
 function focusHandle() {
-	//var audio = new Audio('./assets/sounds/clock-alarm.mp3');
-	/*if (window.electron) {
-		audio.play();
-	}*/
 	audioPlay('./assets/sounds/clock-alarm.mp3');
 	window.electron?.undoMinimizeAll()
 	demo.style.color = '#0d8c00';
@@ -114,10 +96,6 @@ function focusHandle() {
 }
 
 function restHandle() {
-	//var audio = new Audio('./assets/sounds/piano.mp3');
-	/*if (window.electron) {
-		audio.play();
-	}*/
 	audioPlay('./assets/sounds/piano.mp3');
 	window.electron?.minimizeCMD()
 	demo.style.color = '#a6cca3';
@@ -149,17 +127,13 @@ worker.onmessage = function (event) {
 	circleProgress[0].value = progress;
 	circleProgress[0].max = 100;
 
-	/*circleProgress[0].textFormat = function (){
-		return ''
-	};*/
-
 	if (timer.trim() === '00m 12s') {
 		timerSoundRun = timerSound();
 	}
 
 	demo.innerHTML = timer;
 
-	console.log('worker:: ', event.data);
+	//console.log('worker:: ', event.data);
 
 	if (distance === 0) {
 		//console.log('distance worker:: ', event.data);
@@ -170,36 +144,3 @@ worker.onmessage = function (event) {
 		}
 	}
 }
-
-// Update the count down every 1 second
-//setInterval(function() {
-	//var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	//var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-	//console.log(seconds);
-
-	/*let progress = Math.round((distance / minuteToMillisecond(interval)) * 100);
-
-	circleProgress[0].value = progress;
-	circleProgress[0].max = 100;
-	circleProgress[0].textFormat = function (){
-		//return minutes + "m " + seconds + "s "
-		return minutes + "m " + seconds + "s "
-	};*/
-	/*let demo = document.getElementById("demo");
-	demo.innerHTML = minutes + "m " + seconds + "s ";
-	distance = distance - 1000;*/
-
-	// If the count down is finished, write some text
-	/*if (distance <= 0) {
-		if (restAndFocusToggle) {
-			demo.style.color = '#0035e8';
-			distance = timeManage.restHandle();
-		} else {
-			demo.style.color = '#109806';
-			distance = timeManage.focusHandle();
-		}
-		restAndFocusToggle = !restAndFocusToggle;
-
-	}*/
-//}, 1000);
