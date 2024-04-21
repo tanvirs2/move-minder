@@ -111,10 +111,11 @@ const preferences = new ElectronPreferences({
     debounce: 150, // debounce preference save settings event; 0 to disable
   },
 
+  //debug: true,
 
   // Override default preference BrowserWindow values
   browserWindowOverrides: {
-    width: 500,
+    width: 600,
     height: 400,
   },
 
@@ -128,7 +129,7 @@ const preferences = new ElectronPreferences({
   }]),
 
   // Provide a custom CSS file, relative to your appPath.
-  css: 'preference-styles.css',
+  css: 'src/css/preference-styles.css',
 
   // Preference file path. Where your preferences are saved (required)
   dataStore: path.join(app.getPath("userData"), 'preferences.json'),
@@ -136,33 +137,33 @@ const preferences = new ElectronPreferences({
 
   // Preference default values
   defaults: {
-    about: {
-      name: 'Albert',
-      name2: 'Albert',
+    timer: {
+      time: 30,
+      break: 5,
     }
   },
 
   // Preference sections visible to the UI
   sections: [
     {
-      id: 'about',
-      label: 'About You',
-      icon: 'single-01', // See the list of available icons below
+      id: 'timer',
+      label: 'Timer',
+      icon: 'turtle', // See the list of available icons below
       form: {
         groups: [
           {
-            label: 'About You', // optional
+            label: 'Time Adjust', // optional
             fields: [
               {
-                label: 'Name',
-                key: 'name',
-                type: 'text',
-                help: 'What is your name?'
+                label: 'Focus Time in minute',
+                key: 'time',
+                type: 'number',
+                help: 'Set your Focus Time in minute'
               },{
-                label: 'Name2',
-                key: 'name2',
-                type: 'text',
-                help: 'aaa What is your name?'
+                label: 'Break Time in minute',
+                key: 'break',
+                type: 'number',
+                help: 'Set your Break Time in minute'
               },
               // ...
             ]
@@ -171,33 +172,7 @@ const preferences = new ElectronPreferences({
         ]
       }
     },
-    {
-      id: 'about2',
-      label: 'aaaa About You',
-      icon: 'single-01', // See the list of available icons below
-      form: {
-        groups: [
-          {
-            label: 'xxxxx About You', // optional
-            fields: [
-              {
-                label: 'Name',
-                key: 'name',
-                type: 'text',
-                help: 'What is your name?'
-              },{
-                label: 'sssssss Name2',
-                key: 'name2',
-                type: 'text',
-                help: 'aaa What is your name?'
-              },
-              // ...
-            ]
-          },
-          // ...
-        ]
-      }
-    },
+
     // ...
   ]
 })
@@ -210,6 +185,7 @@ const createWindow = () => {
     //icon: __dirname + './assets/imgs/logo/logo.png',
     icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
+      devTools :  true,
       nodeIntegration:  true,
       //contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
@@ -258,7 +234,7 @@ const createWindow = () => {
         newMenu.append(x);
       })
 
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
 
 

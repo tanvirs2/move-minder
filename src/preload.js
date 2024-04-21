@@ -3,7 +3,16 @@
 const { contextBridge, ipcMain, ipcRenderer } = require('electron');
 var MicroModal = require('micromodal');
 
+// Fetch the preferences object
+const preferences = ipcRenderer.sendSync('getPreferences');
 
+ipcRenderer.send('showPreferences');
+
+// Listen to the `preferencesUpdated` event to be notified when preferences are changed.
+ipcRenderer.on('preferencesUpdated', (e, preferences) => {
+    console.log('Preferences were updated', preferences);
+});
+//console.log({preferences});
 //MicroModal.init();
 
 const appArray = [
@@ -53,6 +62,7 @@ contextBridge.exposeInMainWorld("electron", {
     minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
     undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
     timeProgress: (payload) => ipcRenderer.send('timeProgress', payload),
+    timeSettings: preferences.timer,
     //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
