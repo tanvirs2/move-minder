@@ -1,8 +1,13 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
+const ElectronPreferences = require('electron-preferences');
 const path = require('path');
+
+var MicroModal = require('micromodal');
 
 const subProcess = require('child_process');
 const {exec} = require("child_process");
+
+
 //const CircleProgress = require('js-circle-progress');
 //var ProgressBar = require('progressbar.js')
 
@@ -100,12 +105,113 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+
+const preferences = new ElectronPreferences({
+  config: {
+    debounce: 150, // debounce preference save settings event; 0 to disable
+  },
+
+
+  // Override default preference BrowserWindow values
+  browserWindowOverrides: {
+    width: 500,
+    height: 400,
+  },
+
+  // Create an optional menu bar
+  menu: Menu.buildFromTemplate([{
+    label: 'File',
+    submenu: [
+      { role: 'quit' },
+      { role: 'rrr' }
+    ]
+  }]),
+
+  // Provide a custom CSS file, relative to your appPath.
+  css: 'preference-styles.css',
+
+  // Preference file path. Where your preferences are saved (required)
+  dataStore: path.join(app.getPath("userData"), 'preferences.json'),
+
+
+  // Preference default values
+  defaults: {
+    about: {
+      name: 'Albert',
+      name2: 'Albert',
+    }
+  },
+
+  // Preference sections visible to the UI
+  sections: [
+    {
+      id: 'about',
+      label: 'About You',
+      icon: 'single-01', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'About You', // optional
+            fields: [
+              {
+                label: 'Name',
+                key: 'name',
+                type: 'text',
+                help: 'What is your name?'
+              },{
+                label: 'Name2',
+                key: 'name2',
+                type: 'text',
+                help: 'aaa What is your name?'
+              },
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
+    {
+      id: 'about2',
+      label: 'aaaa About You',
+      icon: 'single-01', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'xxxxx About You', // optional
+            fields: [
+              {
+                label: 'Name',
+                key: 'name',
+                type: 'text',
+                help: 'What is your name?'
+              },{
+                label: 'sssssss Name2',
+                key: 'name2',
+                type: 'text',
+                help: 'aaa What is your name?'
+              },
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
+    // ...
+  ]
+})
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    //icon: __dirname + './assets/imgs/logo/logo.png',
+    icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
+      nodeIntegration:  true,
+      //contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
@@ -117,14 +223,54 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
 
+  let filemenu = Menu.buildFromTemplate([{
+    label: 'File',
+    submenu: [
+      {
+        label: 'Preferences',
+        click: () => {
+          preferences.show();
+        }
+      },
+      { role: 'quit', }
+    ]
+  }])
+
+  let defaultMenu = Menu.getApplicationMenu()
+  let newMenu = new Menu();
+  defaultMenu.items
+      //.filter(x => x.role != 'filemenu')
+      .forEach(x => {
+        if (x.label === 'File') {
+
+          /*x.submenu = [
+            { label: 'aaaa', },
+            { label: 'aaaxxxaaaa', },
+          ];
+
+          console.log('UUUUu filemenu: ', filemenu, filemenu.items, 'x:', x.submenu.items);*/
+
+
+          x = filemenu.items[0];
+        }
+
+
+        newMenu.append(x);
+      })
+
+  //mainWindow.webContents.openDevTools();
+
+
+
+  Menu.setApplicationMenu(newMenu)
+
+  //
 
 
   //mainWindow.webContents.executeJavaScript(console.log(mainWindow.webContents));
 
   //console.log({mainWindow: mainWindow.webContents})
-
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
   /*setTimeout(()=>{
     //mainWindow.webContents.send('data-channel', { message: 'Hello from Main!' });
 

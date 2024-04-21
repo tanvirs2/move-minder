@@ -1,8 +1,12 @@
+let dev = false;
+
 let interval = 30;
 let focus = interval;
 let rest = 5;
-
-let dev = false;
+let distance = 0;
+let focusToggle = true;
+let play = false;
+let intvStart;
 
 if (dev) {
     interval = .5;
@@ -13,11 +17,11 @@ if (dev) {
 const minuteToMillisecond =(minute) => {
     let sixtyMillisecond = 60;
     let oneMinute = sixtyMillisecond * 1000;
-    return minute * oneMinute;
+    return (minute * oneMinute);
 };
 
 
-let distance = minuteToMillisecond(interval);
+distance = minuteToMillisecond(interval);
 
 const timeModify = (time) => {
 
@@ -40,10 +44,6 @@ const timeModify = (time) => {
 
 }
 
-let focusToggle = true;
-
-let play = false;
-let intvStart;
 
 self.onmessage = function (event) {
     play = event.data.play;
@@ -68,8 +68,8 @@ const addZero = (num) => ('0' + num).slice(-2)
 
 function timeStart(){
     intvStart = setInterval(()=>{
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         //('0' + minutes).slice(-2)
 

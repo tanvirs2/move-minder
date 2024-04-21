@@ -1,4 +1,7 @@
+let dev = false;
 
+window.electron?.MicroModal().init();
+//window.electron?.MicroModal().show('modal-1');
 
 window.addEventListener('DOMContentLoaded', () => {
 	/*window.electron.getSettings().then(a=>{
@@ -37,14 +40,11 @@ let worker;
 let timerSoundRun;
 let playToggle = false;
 
-const timeModify = (time) => {
-	//time-decrease
-	//distance = minuteToMillisecond(interval + time);
-}
 
 timeIncrease.onclick = function () {
 	if (timerSoundRun) {
 		timerSoundRun.pause();
+		timerSoundRun.currentTime = 0;
 	}
 	worker.postMessage({time: 5, timeModifyFound: true});
 }
@@ -52,6 +52,7 @@ timeIncrease.onclick = function () {
 timeDecrease.onclick = function () {
 	if (timerSoundRun) {
 		timerSoundRun.pause();
+		timerSoundRun.currentTime = 0;
 	}
 	worker.postMessage({time: -5, timeModifyFound: true});
 }
@@ -90,14 +91,14 @@ function audioPlay(src) {
 
 function focusHandle() {
 	audioPlay('./assets/sounds/clock-alarm.mp3');
-	window.electron?.undoMinimizeAll()
+	!dev && window.electron?.undoMinimizeAll()
 	demo.style.color = '#0d8c00';
 	focusArea.style.backgroundImage = 'url("./assets/imgs/plant-leaf-svgrepo-com.svg")'
 }
 
 function restHandle() {
 	audioPlay('./assets/sounds/piano.mp3');
-	window.electron?.minimizeCMD()
+	!dev && window.electron?.minimizeCMD()
 	demo.style.color = '#a6cca3';
 	focusArea.style.backgroundImage = 'url("./assets/imgs/tea-cup-coffee-svgrepo-com.svg")'
 }

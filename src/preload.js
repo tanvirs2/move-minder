@@ -1,6 +1,10 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 const { contextBridge, ipcMain, ipcRenderer } = require('electron');
+var MicroModal = require('micromodal');
+
+
+//MicroModal.init();
 
 const appArray = [
     {
@@ -52,6 +56,7 @@ contextBridge.exposeInMainWorld("electron", {
     //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
+    MicroModal: () => MicroModal,
     //laragon_app_run: () => ipcRenderer.send('laragon_app_run'),
     ...bridges
 });
