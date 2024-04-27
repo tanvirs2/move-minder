@@ -1,7 +1,6 @@
 let dev = false;
+const settings = {settings: {timeSettings: window.electron.timeSettings}};
 
-window.electron?.MicroModal().init();
-//window.electron?.MicroModal().show('modal-1');
 
 window.addEventListener('DOMContentLoaded', () => {
 	/*window.electron.getSettings().then(a=>{
@@ -30,6 +29,7 @@ let timeIncrease = document.querySelector("#time-increase");
 let timeDecrease = document.querySelector("#time-decrease");
 let fondo_btn = play.querySelector(".fondo");
 let demo = document.getElementById("demo");
+demo.innerHTML = window.electron.timeSettings.interval + "m 00s";
 focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
 focusArea.style.backgroundSize = '5rem';
 focusArea.style.backgroundRepeat = 'no-repeat';
@@ -110,7 +110,9 @@ function timerSound() {
 let circleProgress = document.getElementsByTagName("circle-progress");
 //console.log(circleProgress[0]);
 
-worker = new Worker('js/timer_worker.js');
+worker = new Worker('js/timer_worker.js', {name: JSON.stringify(settings)});
+
+//worker.postMessage(settings);
 
 worker.onmessage = function (event) {
 	const {timer, focusToggle, distance, focus, rest, interval, timeModify} = event.data;

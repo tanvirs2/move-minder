@@ -597,11 +597,6 @@ circle-progress::part(circle) {
 
 
 
-*:active {
-    background: red;
-}
-
-
 /*
 
 .circle-progress-value {

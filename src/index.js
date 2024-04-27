@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
 const ElectronPreferences = require('electron-preferences');
 const path = require('path');
 
-var MicroModal = require('micromodal');
 
 const subProcess = require('child_process');
 const {exec} = require("child_process");
@@ -138,8 +137,8 @@ const preferences = new ElectronPreferences({
   // Preference default values
   defaults: {
     timer: {
-      time: 30,
-      break: 5,
+      interval: 30,
+      rest: 5,
     }
   },
 
@@ -156,12 +155,12 @@ const preferences = new ElectronPreferences({
             fields: [
               {
                 label: 'Focus Time in minute',
-                key: 'time',
+                key: 'interval',
                 type: 'number',
                 help: 'Set your Focus Time in minute'
               },{
                 label: 'Break Time in minute',
-                key: 'break',
+                key: 'rest',
                 type: 'number',
                 help: 'Set your Break Time in minute'
               },

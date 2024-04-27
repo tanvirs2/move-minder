@@ -1,11 +1,11 @@
-let dev = false;
+let dev;
 
-let interval = 30;
-let focus = interval;
-let rest = 5;
-let distance = 0;
-let focusToggle = true;
-let play = false;
+let interval;
+let focus;
+let rest;
+let distance;
+let focusToggle;
+let play;
 let intvStart;
 
 if (dev) {
@@ -13,6 +13,23 @@ if (dev) {
     focus = interval;
     rest = .25;
 }
+
+
+const init = ({settings}) => {
+
+    const {timeSettings} = settings;
+
+    dev = false;
+
+    interval = timeSettings.interval;
+    focus = interval;
+    rest = timeSettings.rest;
+    distance = 0;
+    focusToggle = true;
+    play = false;
+}
+
+init(JSON.parse(this.name));
 
 const minuteToMillisecond =(minute) => {
     let sixtyMillisecond = 60;

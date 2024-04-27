@@ -25,7 +25,7 @@ node_version.addEventListener('change', function (evt) {
 });
 
 
-console.log({timeSettings: window.electron.timeSettings})
+//console.log({timeSettings: window.electron.timeSettings})
 
 window.electron?.nodeVersionList().then(nodes=>{
     let lists = nodes.split("\n").filter(item => !!item);
