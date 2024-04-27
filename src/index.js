@@ -171,6 +171,50 @@ const preferences = new ElectronPreferences({
         ]
       }
     },
+    {
+      id: 'quick_icon',
+      label: 'Quick Icon',
+      icon: 'widget', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'App Name', // optional
+            fields: [
+              {
+                label: 'Add application',
+                key: 'app_name',
+                type: 'list',
+                help: 'Add application to quick start'
+              }
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
+    {
+      id: 'plugin',
+      label: 'Plugin',
+      icon: 'preferences', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'Plugin Name', // optional
+            fields: [
+              {
+                label: 'Add Plugin',
+                key: 'plugin_name',
+                type: 'list',
+                help: 'Add Plugin to easy use'
+              }
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
 
     // ...
   ]
