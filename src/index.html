@@ -31,6 +31,9 @@
 
             </div>
 
+            <input type="file" id="quick-open">
+
+            <div id="icons"></div>
 
         </div>
 
@@ -115,6 +118,16 @@
 <script src="js/circle-progress.min.js" type="module"></script>
 
 <script>
+
+    //window.electron.preferences.quick_icon.app_name
+
+    document.getElementById("icons").innerHTML = (()=>{
+        let div = "";
+        window.electron.preferences.quick_icon.app_name.forEach(elm=>{
+            div += `<div>${elm}</div>`;
+        });
+        return div;
+    })();
 
     const appArray = [
         {

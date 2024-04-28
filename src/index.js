@@ -139,6 +139,9 @@ const preferences = new ElectronPreferences({
     timer: {
       interval: 30,
       rest: 5,
+    },
+    quick_icon: {
+      app_name: []
     }
   },
 

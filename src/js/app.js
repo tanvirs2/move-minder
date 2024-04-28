@@ -1,5 +1,5 @@
 let dev = false;
-const settings = {settings: {timeSettings: window.electron.timeSettings}};
+const settings = {settings: {timeSettings: window.electron.preferences.timer}};
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -17,6 +17,27 @@ window.addEventListener('DOMContentLoaded', () => {
 	});*/
 });
 
+document.getElementById("quick-open").addEventListener('change', function () {
+	//window.electron.savePreferences();
+	//console.log(this.files[0])
+	/*let obj = {
+		"quick_icon": {
+			"app_name": [
+				"gg"
+			]
+		}
+	};*/
+
+	window.electron.saveQuickIcon(this.files[0].path);
+
+
+	/*"quick_icon": {
+		"app_name": [
+			"gg"
+		]
+	},*/
+});
+
 function minuteToMillisecond(minute) {
 	let sixtyMillisecond = 60;
 	let oneMinute = sixtyMillisecond * 1000;
@@ -29,7 +50,7 @@ let timeIncrease = document.querySelector("#time-increase");
 let timeDecrease = document.querySelector("#time-decrease");
 let fondo_btn = play.querySelector(".fondo");
 let demo = document.getElementById("demo");
-demo.innerHTML = window.electron.timeSettings.interval + "m 00s";
+demo.innerHTML = window.electron.preferences.timer.interval + "m 00s";
 focusArea.style.backgroundImage = 'url("./assets/imgs/computer-sleep-mode-monitor-screen-symbol-with-a-night-image-svgrepo-com.svg")'
 focusArea.style.backgroundSize = '5rem';
 focusArea.style.backgroundRepeat = 'no-repeat';

@@ -12,7 +12,42 @@ const preferences = ipcRenderer.sendSync('getPreferences');
 ipcRenderer.on('preferencesUpdated', (e, preferences) => {
     console.log('Preferences were updated', preferences);
 });
+
+
 //console.log({preferences});
+
+const savePreferences = (obj) => {
+    // Instruct the preferences service to update the preferences object from within the renderer.
+    /*about: {
+            name: 'Tanvir'
+        }
+    "quick_icon": {
+        "app_name": [
+            "gg"
+        ]
+    },
+        */
+
+
+    ipcRenderer.sendSync('setPreferences', {
+        ...preferences,
+        ...obj
+    });
+}
+
+const saveQuickIcon = (app) => {
+    const preferences = ipcRenderer.sendSync('getPreferences');
+    let app_names = [...preferences.quick_icon.app_name, app];
+    let appSet = new Set(app_names);
+    ipcRenderer.sendSync('setPreferences', {
+        ...preferences,
+        quick_icon: {
+            app_name: [
+                ...appSet
+            ]
+        }
+    });
+}
 
 const appArray = [
     {
@@ -61,7 +96,10 @@ contextBridge.exposeInMainWorld("electron", {
     minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
     undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
     timeProgress: (payload) => ipcRenderer.send('timeProgress', payload),
-    timeSettings: preferences.timer,
+    //timeSettings: preferences.timer,
+    preferences: preferences,
+    savePreferences: savePreferences,
+    saveQuickIcon: saveQuickIcon,
     //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
