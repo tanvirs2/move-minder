@@ -34,6 +34,7 @@
             <input type="file" id="quick-open">
 
             <div id="icons"></div>
+            <img width="50" id="elcIcon">
 
         </div>
 
@@ -121,13 +122,51 @@
 
     //window.electron.preferences.quick_icon.app_name
 
-    document.getElementById("icons").innerHTML = (()=>{
-        let div = "";
-        window.electron.preferences.quick_icon.app_name.forEach(elm=>{
-            div += `<div>${elm}</div>`;
+    const btnArea = document.querySelector("#btn-area");
+    const appBtn = document.querySelector("#app-btn");
+
+    const iconList = (app_names) => {
+
+        document.getElementById("icons").innerHTML = (()=>{
+            let div = "";
+            app_names.forEach((elm, index)=>{
+                let filename = elm.replace(/^.*[\\/]/, '');
+                //console.log(filename);
+
+
+                div += `<span><img id="ufile-${index}" width="50" src="assets/imgs/icons/${filename}.png" alt=""></span>`;
+            });
+
+            //return div;
+        })();
+
+
+
+        app_names.forEach((elm, index) => {
+            let filename = elm.replace(/^.*[\\/]/, '');
+            //console.log(a, btnArea);
+            const cloneAppBtn = appBtn.cloneNode(true);
+
+            cloneAppBtn.style.display = 'block'
+
+            cloneAppBtn.querySelector('img').src = `assets/imgs/icons/${filename}.png`
+            cloneAppBtn.querySelector('p').innerText = filename
+            cloneAppBtn.id = `file-${index}`
+
+            btnArea.appendChild(cloneAppBtn);
         });
-        return div;
-    })();
+
+        app_names.forEach((elm, index)=>{
+            document.getElementById("file-"+index).addEventListener('click', ()=>{
+                window.electron.iconRun(elm);
+            });
+        });
+
+    }
+
+    iconList(window.electron.preferences.quick_icon.app_name);
+
+    window.iconList = iconList;
 
     const appArray = [
         {
@@ -163,24 +202,10 @@
     ];
 
 
-    const btnArea = document.querySelector("#btn-area");
-    const appBtn = document.querySelector("#app-btn");
 
     //console.log({appBtn})
 
-    appArray.forEach(({name, logo, color}) => {
-        //console.log(a, btnArea);
-        const cloneAppBtn = appBtn.cloneNode(true);
 
-        cloneAppBtn.style.display = 'block'
-        cloneAppBtn.style.color = color
-
-        cloneAppBtn.querySelector('img').src = `./assets/imgs/${logo}`
-        cloneAppBtn.querySelector('p').innerText = name
-        cloneAppBtn.id = name
-
-        btnArea.appendChild(cloneAppBtn);
-    });
 
 </script>
 

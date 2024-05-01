@@ -28,8 +28,29 @@ document.getElementById("quick-open").addEventListener('change', function () {
 		}
 	};*/
 
-	window.electron.saveQuickIcon(this.files[0].path);
+	let fullPath = this.files[0].path;
 
+	let app_names = window.electron.saveQuickIcon(fullPath);
+
+	//console.log(app_icon)
+
+	window.electron.createFileIconFromPath(fullPath).then(imgPath=>{
+		console.log({imgPath})
+		window.iconList(app_names);
+	});
+
+	//let filename = fullPath.replace(/^.*[\\/]/, '');
+	//console.log(filename);
+
+
+	/*window.electron.createFileIconFromPath('aaaaaaaaaaaaa').then(img=>{
+		console.log({img})
+		//window.elcIcon = img;
+
+		//document.querySelector("#elcIcon").src = img
+	});*/
+
+	//console.log({appIcon})
 
 	/*"quick_icon": {
 		"app_name": [

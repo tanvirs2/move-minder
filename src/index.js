@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
 const ElectronPreferences = require('electron-preferences');
 const path = require('path');
-
+const fs = require("fs/promises");
 
 const subProcess = require('child_process');
 const {exec} = require("child_process");
@@ -16,6 +16,28 @@ const {exec} = require("child_process");
 ipcMain.handle('getSettings', () => {
   return 'abcdef'
 })
+
+const createFileIconFromPath = async (fileFullPath) => {
+  //console.log({filename})
+  //fs.writeFileSync(__dirname + `/images/img-${filePath}.png`, fileIcon.toPNG())
+  //await fs.unlink(tempFile); // delete temp file
+  var filename = path.parse(fileFullPath).base;
+  const image = await app.getFileIcon(fileFullPath); // get file icon of temp file
+  const tempFile = path.join(__dirname +'/assets/imgs/icons/', filename+'.png');
+  await fs.writeFile(tempFile, image.toPNG()); // create empty temp file
+  return tempFile;
+};
+
+const iconRun = (fileFullPath) => {
+
+  exec(fileFullPath, (error, stdout, stderr)=>{
+
+  })
+};
+
+ipcMain.handle("createFileIconFromPath", (event, fullPath) => createFileIconFromPath(fullPath))
+ipcMain.handle("iconRun", (event, fullPath) => iconRun(fullPath))
+
 
 const nodeVersionListPromise = () => {
   return new Promise((resolve, reject)=>{
@@ -32,6 +54,8 @@ const nodeVersionListPromise = () => {
 ipcMain.handle('nodeVersionList', async () => {
   return await nodeVersionListPromise()
 })
+
+
 
 let minimizeCMD = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.minimizeAll() }"';
 let undoMinimizeAll = 'powershell -command "& { $x = New-Object -ComObject Shell.Application; $x.UndoMinimizeAll() }"';
