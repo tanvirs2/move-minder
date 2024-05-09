@@ -22,7 +22,7 @@ const createFileIconFromPath = async (fileFullPath) => {
   //fs.writeFileSync(__dirname + `/images/img-${filePath}.png`, fileIcon.toPNG())
   //await fs.unlink(tempFile); // delete temp file
   var filename = path.parse(fileFullPath).base;
-  const image = await app.getFileIcon(fileFullPath); // get file icon of temp file
+  const image = await app.getFileIcon(fileFullPath, {size: 'large'}); // get file icon of temp file
   const tempFile = path.join(__dirname +'/assets/imgs/icons/', filename+'.png');
   await fs.writeFile(tempFile, image.toPNG()); // create empty temp file
   return tempFile;

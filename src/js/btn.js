@@ -60,6 +60,7 @@ let radioBtn = (name)=>{
 }
 
 
+/*
 appArray.forEach(({name, logo}) => {
     const icon = document.querySelector(`#${name}`);
     //console.log(icon);
@@ -68,4 +69,4 @@ appArray.forEach(({name, logo}) => {
         window.electron[name]()
         //alert('d');
     });
-});
+});*/

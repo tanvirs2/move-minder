@@ -18,6 +18,11 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 document.getElementById("quick-open").addEventListener('change', function () {
+
+	console.log(this.files[0].path)
+
+	fileHandling(this.files[0].path);
+
 	//window.electron.savePreferences();
 	//console.log(this.files[0])
 	/*let obj = {
@@ -28,16 +33,6 @@ document.getElementById("quick-open").addEventListener('change', function () {
 		}
 	};*/
 
-	let fullPath = this.files[0].path;
-
-	let app_names = window.electron.saveQuickIcon(fullPath);
-
-	//console.log(app_icon)
-
-	window.electron.createFileIconFromPath(fullPath).then(imgPath=>{
-		console.log({imgPath})
-		window.iconList(app_names);
-	});
 
 	//let filename = fullPath.replace(/^.*[\\/]/, '');
 	//console.log(filename);
@@ -58,6 +53,19 @@ document.getElementById("quick-open").addEventListener('change', function () {
 		]
 	},*/
 });
+
+const fileHandling = (fullPath) => {
+	let app_names = window.electron.saveQuickIcon(fullPath);
+
+	//console.log(app_icon)
+
+	window.electron.createFileIconFromPath(fullPath).then(imgPath=>{
+		//console.log({app_names, imgPath})
+		window.iconList(app_names);
+	});
+}
+
+
 
 function minuteToMillisecond(minute) {
 	let sixtyMillisecond = 60;

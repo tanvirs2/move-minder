@@ -9,7 +9,19 @@
     <script src="js/app.js" defer></script>
 </head>
 <body>
+<div id="toggle-file-shortcut" style="width: 50px; height: 50px; background: radial-gradient(white, green 50%); position: absolute; bottom: 35px;border: 3px solid green; cursor: pointer; border-radius: 50%">
+    <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute;
+    top: 6px;
+    left: 7px;">
 
+        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <g id="SVGRepo_iconCarrier"> <path d="M10 14H12M12 14H14M12 14V16M12 14V12" stroke="green" stroke-width="1.5" stroke-linecap="round"/> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="white" stroke-width="1.5" stroke-linecap="round"/> </g>
+
+    </svg>
+</div>
 
 <div id="main-ui">
     <div style="display: flex; justify-content: space-between">
@@ -31,10 +43,6 @@
 
             </div>
 
-            <input type="file" id="quick-open">
-
-            <div id="icons"></div>
-            <img width="50" id="elcIcon">
 
         </div>
 
@@ -98,8 +106,36 @@
     </div>
 
 
-    <div style="position: absolute; bottom: 3%; width: 100%">
+    <div style="position: absolute; bottom: 0; width: 100%">
+        <input type="file" id="quick-open" style="display:none;"/>
+        <label for="quick-open">
+            <div style="height: 5rem;
+                        background: #f3f3f3;
+                        border: 3px dashed #b9b9b9;
+                        border-radius: 5px;
+                        text-align: center;
+                        color: #abd0c0;
+                        cursor: pointer;
+                "
+                 id="drop-area"
+            >
+                <h4 style="
+                    margin-bottom: 0;
+                    margin-top: 15px;
+                ">
+                    Drag &amp; Drop here for shortcut! or
+                </h4>
+                <h3 style="
+                    margin: 0;
+                ">
+                    Click me to choose file
+                </h3>
+            </div>
+        </label>
+
         <div style="display: flex; justify-content: space-between;" id="btn-area">
+
+
 
             <div style="
         width: 4rem;
@@ -116,18 +152,52 @@
     </div>
 </div>
 
+
+
 <script src="js/circle-progress.min.js" type="module"></script>
 
 <script>
 
     //window.electron.preferences.quick_icon.app_name
 
+    const toggleFileShortcut = document.querySelector("#toggle-file-shortcut");
+    const dropArea = document.querySelector("#drop-area");
     const btnArea = document.querySelector("#btn-area");
     const appBtn = document.querySelector("#app-btn");
 
+    toggleFileShortcut.addEventListener("click", ()=>{
+        //console.log(dropArea.style.display)
+        if (dropArea.style.display === 'block') {
+            toggleFileShortcut.style.background = 'radial-gradient(white, green 50%)'
+            dropArea.style.display = 'none';
+            btnArea.style.display = 'flex';
+        } else {
+            toggleFileShortcut.style.background = 'radial-gradient(white, green)'
+            dropArea.style.display = 'block';
+            btnArea.style.display = 'none';
+        }
+    })
+
+    //dropArea.setAttribute('draggable', true);
+
+    dropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        //console.log(e)
+    });
+
+    dropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        fileHandling(e.dataTransfer.files[0].path)
+        //console.dir(e.dataTransfer.files[0], this)
+    });
+
+
+
     const iconList = (app_names) => {
 
-        document.getElementById("icons").innerHTML = (()=>{
+        btnArea.innerHTML = '';
+
+        /*document.getElementById("icons").innerHTML = (()=>{
             let div = "";
             app_names.forEach((elm, index)=>{
                 let filename = elm.replace(/^.*[\\/]/, '');
@@ -138,7 +208,15 @@
             });
 
             //return div;
-        })();
+        })();*/
+
+        if (app_names.length) {
+            dropArea.style.display = 'none';
+            toggleFileShortcut.style.display = 'block';
+        } else {
+            dropArea.style.display = 'block';
+            toggleFileShortcut.style.display = 'none';
+        }
 
 
 
@@ -150,10 +228,15 @@
             cloneAppBtn.style.display = 'block'
 
             cloneAppBtn.querySelector('img').src = `assets/imgs/icons/${filename}.png`
-            cloneAppBtn.querySelector('p').innerText = filename
+            //cloneAppBtn.querySelector('p').innerText = filename.substring(0, 10)
+            let filenameFWord = filename.split(" ")[0];
+            cloneAppBtn.querySelector('p').innerText = filenameFWord.length > 10 ? filenameFWord.substring(0, 10) : filenameFWord;
             cloneAppBtn.id = `file-${index}`
 
+            //console.log(cloneAppBtn.outerHTML)
+
             btnArea.appendChild(cloneAppBtn);
+            //btnArea.innerHTML = cloneAppBtn.innerHTML;
         });
 
         app_names.forEach((elm, index)=>{
