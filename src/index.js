@@ -30,9 +30,20 @@ const createFileIconFromPath = async (fileFullPath) => {
 
 const iconRun = (fileFullPath) => {
 
-  exec(fileFullPath, (error, stdout, stderr)=>{
+  (async() => {
+    const stat = await fs.lstat(fileFullPath);
+    if (stat.isFile()) {
+      exec(`"${fileFullPath}"`)
+    } else if (stat.isDirectory()) {
 
-  })
+      exec(`start "" "${fileFullPath}"`, (error, stdout, stderr)=>{
+        //console.log({error, stdout, stderr});
+      });
+    }
+
+  })().catch(console.error)
+
+
 };
 
 ipcMain.handle("createFileIconFromPath", (event, fullPath) => createFileIconFromPath(fullPath))
@@ -166,6 +177,29 @@ const preferences = new ElectronPreferences({
     },
     quick_icon: {
       app_name: []
+    },
+    holiday: {
+      date_string: `21-02, Feb, Wed, "Shaheed Day"
+    |26-02, Feb, Mon, "Shab e-Barat</span>"
+    |17-03, Mar, Sun, "National Mourning Day"
+    |26-03, Mar, Tue, "Independence Day"
+    |05-04, Apr, Fri, "Jumatul Bidah</span>"
+    |10-04, Apr, Wed, "Eid ul-Fitr Holiday"
+    |11-04, Apr, Thu, "Eid ul-Fitr"
+    |12-04, Apr, Fri, "Eid ul-Fitr Holiday"
+    |14-04, Apr, Sun, "Bengali New Year"
+    |01-05, May, Wed, "May Day"
+    |22-05, May, Wed, "Buddha Purnima"
+    |16-06, Jun, Sun, "Eid ul-Adha Holiday"
+    |17-06, Jun, Mon, "Eid ul-Adha"
+    |18-06, Jun, Tue, "Eid ul-Adha Holiday"
+    |17-07, Jul, Wed, "Ashura"
+    |15-08, Aug, Thu, "National Mourning Day"
+    |26-08, Aug, Mon, "Shuba Janmashtami"
+    |16-09, Sep, Mon, "Eid-e-Milad un-Nabi"
+    |13-10, Oct, Sun, "Vijaya Dashami"
+    |16-12, Dec, Mon, "Victory Day"
+    |25-12, Dec, Wed, "Christmas Day"`
     }
   },
 
@@ -234,6 +268,28 @@ const preferences = new ElectronPreferences({
                 key: 'plugin_name',
                 type: 'list',
                 help: 'Add Plugin to easy use'
+              }
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
+    {
+      id: 'holiday',
+      label: 'Holidays',
+      icon: 'grid-45', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'Date List', // optional
+            fields: [
+              {
+                label: 'Add Date',
+                key: 'date_string',
+                type: 'text',
+                help: 'Example: (Format Day-Month) 01-05 | 25-12 | ...'
               }
               // ...
             ]
