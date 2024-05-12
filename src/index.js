@@ -171,6 +171,9 @@ const preferences = new ElectronPreferences({
 
   // Preference default values
   defaults: {
+    general: {
+      title: "💖 My Work Station!",
+    },
     timer: {
       interval: 30,
       rest: 5,
@@ -206,6 +209,25 @@ const preferences = new ElectronPreferences({
   // Preference sections visible to the UI
   sections: [
     {
+      id: 'general',
+      label: 'General',
+      icon: 'home-52', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'Title', // optional
+            fields: [
+              {
+                label: 'Set title',
+                key: 'title',
+                type: 'text'
+              }
+            ]
+          },
+        ]
+      }
+    },
+    {
       id: 'timer',
       label: 'Timer',
       icon: 'turtle', // See the list of available icons below
@@ -225,6 +247,28 @@ const preferences = new ElectronPreferences({
                 type: 'number',
                 help: 'Set your Break Time in minute'
               },
+              // ...
+            ]
+          },
+          // ...
+        ]
+      }
+    },
+    {
+      id: 'holiday',
+      label: 'Holidays',
+      icon: 'grid-45', // See the list of available icons below
+      form: {
+        groups: [
+          {
+            label: 'Date List', // optional
+            fields: [
+              {
+                label: 'Add Date',
+                key: 'date_string',
+                type: 'text',
+                help: 'Example: (Format Day-Month) 01-05 | 25-12 | ...'
+              }
               // ...
             ]
           },
@@ -275,29 +319,7 @@ const preferences = new ElectronPreferences({
           // ...
         ]
       }
-    },
-    {
-      id: 'holiday',
-      label: 'Holidays',
-      icon: 'grid-45', // See the list of available icons below
-      form: {
-        groups: [
-          {
-            label: 'Date List', // optional
-            fields: [
-              {
-                label: 'Add Date',
-                key: 'date_string',
-                type: 'text',
-                help: 'Example: (Format Day-Month) 01-05 | 25-12 | ...'
-              }
-              // ...
-            ]
-          },
-          // ...
-        ]
-      }
-    },
+    }
 
     // ...
   ]

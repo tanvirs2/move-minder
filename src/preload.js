@@ -1,7 +1,9 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 const { app, contextBridge, ipcMain, ipcRenderer } = require('electron');
+const quotes = require('./assets/quotes/quotes.json');
 
+//console.log(quotes);
 
 // Fetch the preferences object
 const preferences = ipcRenderer.sendSync('getPreferences');
@@ -90,6 +92,7 @@ contextBridge.exposeInMainWorld("electron", {
     preferences: preferences,
     savePreferences: savePreferences,
     saveQuickIcon: saveQuickIcon,
+    quotes: quotes,
     //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
