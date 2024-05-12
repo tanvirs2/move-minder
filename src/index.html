@@ -9,8 +9,8 @@
     <script src="js/app.js" defer></script>
 </head>
 <body>
-<div style="color: #206f01;width: 90%;background: #d3f0d3;padding: 5px;border-radius: 3px;margin: 10px auto;text-align: center;">
-    Next holiday: <span id="holiday-text">22-05, May, Wed, "Buddha Purnima"</span>
+<div style="color: #206f01;width: 90%;background: #d3f0d3;padding: 5px;border-radius: 3px;margin: 10px auto 0;text-align: center;" id="holiday-text">
+    <span> Next holiday: </span> <span>22-05, May, Wed, "Buddha Purnima"</span>
 </div>
 <div id="toggle-file-shortcut" style="width: 50px; height: 50px; background: radial-gradient(white, green 50%); position: absolute; bottom: 35px;border: 3px solid green; cursor: pointer; border-radius: 50%">
     <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute;
@@ -205,22 +205,8 @@
     const iconList = (app_names) => {
 
         btnArea.innerHTML = '';
-
         btnArea.style.display = 'flex';
 
-
-        /*document.getElementById("icons").innerHTML = (()=>{
-            let div = "";
-            app_names.forEach((elm, index)=>{
-                let filename = elm.replace(/^.*[\\/]/, '');
-                //console.log(filename);
-
-
-                div += `<span><img id="ufile-${index}" width="50" src="assets/imgs/icons/${filename}.png" alt=""></span>`;
-            });
-
-            //return div;
-        })();*/
 
         if (app_names.length) {
             dropArea.style.display = 'none';
@@ -230,34 +216,19 @@
             toggleFileShortcut.style.display = 'none';
         }
 
-
-
         app_names.forEach((elm, index) => {
             let filename = elm.replace(/^.*[\\/]/, '');
-            //console.log(a, btnArea);
             const cloneAppBtn = appBtn.cloneNode(true);
-
             cloneAppBtn.style.display = 'flex'
-
             cloneAppBtn.querySelector('img').src = `assets/imgs/icons/${filename}.png`
-            //cloneAppBtn.querySelector('p').innerText = filename.substring(0, 10)
             let filenameSplit = filename.split('.');
             let fileExt = filenameSplit.pop();
-
-            let filenameSplitFix = filenameSplit.join(".");
-
-            //console.log({filenameSplit})
-
-            let filenameFWord = filenameSplitFix.length > 10 ? filenameSplitFix.substring(0, 7)+'...' +fileExt : filenameSplitFix+ '.' +fileExt;
-            filenameFWord = filenameFWord.split(" ")[0];
+            let filenameSplitJoin = filenameSplit.join(".");
+            let filenameFWord = filenameSplitJoin.length >= 10 ? filenameSplitJoin.substring(0, 7) + '...' + fileExt : filenameSplitJoin + '.' + fileExt;
             filenameFWord = filenameFWord.replace(/[-_]/g, " ")
             cloneAppBtn.querySelector('p').innerText = filenameFWord;
             cloneAppBtn.id = `file-${index}`
-
-            //console.log(cloneAppBtn.outerHTML)
-
             btnArea.appendChild(cloneAppBtn);
-            //btnArea.innerHTML = cloneAppBtn.innerHTML;
         });
 
         app_names.forEach((elm, index)=>{
@@ -270,25 +241,51 @@
 
     iconList(window.electron.preferences.quick_icon.app_name);
 
-    window.iconList = iconList;
+    //window.iconList = iconList;
 
-    let date_string = window.electron.preferences.holiday.date_string
-
-    let dates = date_string.split("|");
-
-    let currMonthFilter = dates.filter(elm=>{
-        let elmSplit = elm.split(",");
-
-        let cal_date = elmSplit[0].split("-");
+    const showHoliday = () => {
+        let date_string = window.electron.preferences.holiday.date_string
+        let dates = date_string.split("|");
 
         const d = new Date();
         let currMonth = String(d.getMonth() + 1);
         let currDate = String(d.getDate());
 
-        return Number(cal_date[1] + cal_date[0]) > Number(currMonth + currDate);
+        /*currMonth = '5';
+        currDate = '22';*/
+
+        let currMonthFilter = dates.filter(elm=>{
+            let elmSplit = elm.split(",");
+            let cal_date = elmSplit[0].split("-");
+            return Number(cal_date[1] + cal_date[0]) >= Number(currMonth + currDate);
+        });
+
+        let nextHolidayText = currMonthFilter[0];
+        let commaPos = nextHolidayText.indexOf(",");
+        let cal_date = nextHolidayText.substring(0, commaPos).split('-');
+        let calMonth = cal_date[1];
+        let calExactDate = cal_date[0];
+        let today = Number(calMonth + calExactDate) === Number(currMonth + currDate);
+        let spans = holidayText.querySelectorAll('span');
+        if (!!today) {
+            spans[0].style.color = 'red';
+            spans[0].style.fontWeight = 'bold';
+            spans[0].innerHTML = 'Today Holiday: ';
+            spans[1].innerHTML = nextHolidayText;
+        } else {
+            spans[0].innerHTML = 'Next Holiday: ';
+            spans[1].innerHTML = nextHolidayText;
+        }
+    }
+
+    showHoliday();
+
+
+    // add an appropriate event listener
+    document.addEventListener("prefUpdated", (e) => {
+        iconList(e.detail.preferences.quick_icon.app_name);
     });
 
-    holidayText.innerHTML = currMonthFilter[0];
 
 
 </script>

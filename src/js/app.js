@@ -3,65 +3,17 @@ const settings = {settings: {timeSettings: window.electron.preferences.timer}};
 
 
 window.addEventListener('DOMContentLoaded', () => {
-	/*window.electron.getSettings().then(a=>{
-		console.log(a)
-	})*/
 
-	/*window.electron.nodeVersionList().then(a=>{
-		console.log(a)
-	})*/
-
-	/*ipcRenderer.on('data-channel', (event, arg) => {
-		alert('ddd')
-		console.log(arg); // Output: "Hello from Main!"
-	});*/
 });
 
 document.getElementById("quick-open").addEventListener('change', function () {
-
-	console.log(this.files[0].path)
-
 	fileHandling(this.files[0].path);
-
-	//window.electron.savePreferences();
-	//console.log(this.files[0])
-	/*let obj = {
-		"quick_icon": {
-			"app_name": [
-				"gg"
-			]
-		}
-	};*/
-
-
-	//let filename = fullPath.replace(/^.*[\\/]/, '');
-	//console.log(filename);
-
-
-	/*window.electron.createFileIconFromPath('aaaaaaaaaaaaa').then(img=>{
-		console.log({img})
-		//window.elcIcon = img;
-
-		//document.querySelector("#elcIcon").src = img
-	});*/
-
-	//console.log({appIcon})
-
-	/*"quick_icon": {
-		"app_name": [
-			"gg"
-		]
-	},*/
 });
 
 const fileHandling = (fullPath) => {
 	let app_names = window.electron.saveQuickIcon(fullPath);
-
-	//console.log(app_icon)
-
 	window.electron.createFileIconFromPath(fullPath).then(imgPath=>{
 		//console.log({app_names, imgPath})
-		window.iconList(app_names);
 	});
 }
 

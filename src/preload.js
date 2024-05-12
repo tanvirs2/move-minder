@@ -8,32 +8,18 @@ const preferences = ipcRenderer.sendSync('getPreferences');
 
 //ipcRenderer.send('showPreferences');
 
-// Listen to the `preferencesUpdated` event to be notified when preferences are changed.
-ipcRenderer.on('preferencesUpdated', (e, preferences) => {
+ipcRenderer.on('preferencesUpdated', (e, preferences) => { // Listen to the `preferencesUpdated` event to be notified when preferences are changed.
     //console.log('Preferences were updated', preferences);
+    const prefUpdatedEvent = new CustomEvent("prefUpdated", {
+        detail: {
+            preferences,
+        },
+    });
+    document.dispatchEvent(prefUpdatedEvent);
 });
 
 
-//console.log({preferences});
-
-const savePreferences = (obj) => {
-    // Instruct the preferences service to update the preferences object from within the renderer.
-    /*about: {
-            name: 'Tanvir'
-        }
-    "quick_icon": {
-        "app_name": [
-            "gg"
-        ]
-    },
-        */
-
-
-    /*ipcRenderer.sendSync('setPreferences', {
-        ...preferences,
-        ...obj
-    });*/
-}
+const savePreferences = (obj) => {}
 
 const saveQuickIcon = (appPath) => {
     const preferences = ipcRenderer.sendSync('getPreferences');
@@ -49,17 +35,10 @@ const saveQuickIcon = (appPath) => {
     }
 
     ipcRenderer.sendSync('setPreferences', newPreferences);
-
-    /*app.getFileIcon(appPath).then(img=>{
-        console.log(img)
-    })*/
-
-    //console.log({appPath})
-
     return [...appSet];
 }
 
-const appArray = [
+/*const appArray = [
     {
         name: 'laragon',
         logo: 'laragon.png',
@@ -89,7 +68,7 @@ const appArray = [
 let bridges = appArray.reduce((prev, curr) => {
     let currModify = {[curr.name]: () => ipcRenderer.send(`${curr.name}_app_run`)};
     return {...prev, ...currModify};
-} , {});
+} , {});*/
 
 
 /*let bridges = appArray.map(item=> {
@@ -117,19 +96,6 @@ contextBridge.exposeInMainWorld("electron", {
     createFileIconFromPath: (payload) => ipcRenderer.invoke('createFileIconFromPath', payload),
     iconRun: (payload) => ipcRenderer.invoke('iconRun', payload),
     //laragon_app_run: () => ipcRenderer.send('laragon_app_run'),
-    ...bridges
+    //...bridges
 });
 
-/*
-window.addEventListener('DOMContentLoaded', () => {
-    setInterval(()=>{
-        //mainWindow.webContents.send('data-channel', { message: 'Hello from Main!' });
-        //let tt = window.electron.getSettings;
-        console.log(window.electron.timeProgress)
-    }, 1000)
-
-    ipcRenderer.on('data-channel', (event, arg) => {
-        alert('ddd')
-        console.log(arg); // Output: "Hello from Main!"
-    });
-});*/
