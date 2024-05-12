@@ -308,6 +308,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: true,
     //icon: __dirname + './assets/imgs/logo/logo.png',
     icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
