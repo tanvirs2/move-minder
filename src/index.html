@@ -10,7 +10,7 @@
 </head>
 <body>
 <div style="color: #206f01;width: 90%;background: #d3f0d3;padding: 5px;border-radius: 3px;margin: 10px auto 0;text-align: center;" id="holiday-text">
-    <span> Next holiday: </span> <span>22-05, May, Wed, "Buddha Purnima"</span>
+    <span> Next holiday: </span> <span>Date, Month, Day, "Holiday"</span>
 </div>
 <div id="toggle-file-shortcut" style="width: 50px; height: 50px; background: radial-gradient(white, green 50%); position: absolute; bottom: 35px;border: 3px solid green; cursor: pointer; border-radius: 50%">
     <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute;
@@ -35,16 +35,84 @@
 
     <div style="display: flex; justify-content: space-between;">
 
-        <div>
-            <p class="green">Change node version.</p>
+        <div style="width: 100%">
 
-            <div style="zoom: .8">
+            <div id="nvm" style="display: none">
+                <p class="green">Change node version.</p>
 
-                <div id="node_list">
+                <div style="zoom: .8">
+
+                    <div id="node_list">
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="quoteWrapper" style="display: none;height: 100%; width: 95%; position: relative;">
+                <div style="height: 100%; width: 100%;
+                    background: url('nature.jpg');
+                    /*background: green;*/
+                    background-repeat: no-repeat;
+                    filter: blur(5px);
+                    background-size: cover;
+                    background-position: center;
+                    box-sizing: border-box;
+                    padding: 20px; border-radius: 10px;
+                    ">
 
                 </div>
 
+                <div style="height: 100%; width: 100%; position: absolute; top: 0;
+                box-sizing: border-box;
+                    border-radius: 10px;
+                    border: 3px solid #1c591c">
+
+                </div>
+
+                    <div id="quoteBox" style="position: absolute; top: 0; height: 100%; width: 100%; box-sizing: border-box; display: flex;
+                    justify-content: center;
+                    align-items: center;">
+                        <div style="width: 5%; rotate: 180deg; cursor: pointer" id="prevQuote">
+                            <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70 70" enable-background="new 0 0 70 70" xml:space="preserve">
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M34.779,7c2.433,0,4.634,1.614,5.212,4.005l11.386,23.299h0.036l-0.019,0.066l0.019,0.066h-0.036L39.991,58.994 C39.413,61.385,37.211,63,34.777,63c-0.404,0-0.814-0.045-1.225-0.138c-2.882-0.654-4.671-3.441-3.998-6.23L40.332,34.37 L29.555,13.366c-0.673-2.787,1.116-5.576,3.998-6.229C33.963,7.044,34.375,7,34.779,7 M34.779,3c-0.708,0-1.419,0.079-2.11,0.236 c-2.476,0.561-4.565,2.042-5.888,4.171c-1.291,2.079-1.687,4.528-1.115,6.897c0.075,0.308,0.186,0.605,0.33,0.888l9.867,19.229 l-9.909,20.467c-0.124,0.258-0.221,0.527-0.288,0.805c-0.571,2.369-0.176,4.818,1.114,6.896c1.321,2.129,3.411,3.611,5.89,4.174 C33.361,66.92,34.07,67,34.777,67c4.199,0,7.832-2.705,8.985-6.631l11.036-23.803c0.437-0.694,0.647-1.502,0.609-2.313 c-0.013-0.711-0.219-1.411-0.594-2.025L43.75,9.585C42.581,5.684,38.962,3,34.779,3L34.779,3z"></path>
+<!--                                    <path d="M22.588,31.325c2.209,0,4,1.791,4,4s-1.791,4-4,4s-4-1.791-4-4S20.379,31.325,22.588,31.325 M22.588,27.325 c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S26.999,27.325,22.588,27.325L22.588,27.325z"></path>-->
+                                </g>
+                            </svg>
+                        </div>
+                        <div style="background: rgba(223,252,223,0.49);width: 88%;
+                            padding: 10px; box-sizing: border-box;
+                            border-radius: 5px;
+                            filter: contrast(200%);
+                            box-shadow: #057905 0 0 20px;"
+
+                        >
+                            “<span class="quoteText" style="font-family: 'Inter Semi Bold'; ">You only live once, but if you do it right, once is enough.</span>”
+                            <br>
+                            ―
+                            <span class="authorOrTitle" style="font-family: 'Ink Free'; font-weight: bolder; ">Mae West</span>
+                        </div>
+                        <div style="width: 5%;  cursor: pointer" id="nextQuote">
+                            <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70 70" enable-background="new 0 0 70 70" xml:space="preserve">
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M34.779,7c2.433,0,4.634,1.614,5.212,4.005l11.386,23.299h0.036l-0.019,0.066l0.019,0.066h-0.036L39.991,58.994 C39.413,61.385,37.211,63,34.777,63c-0.404,0-0.814-0.045-1.225-0.138c-2.882-0.654-4.671-3.441-3.998-6.23L40.332,34.37 L29.555,13.366c-0.673-2.787,1.116-5.576,3.998-6.229C33.963,7.044,34.375,7,34.779,7 M34.779,3c-0.708,0-1.419,0.079-2.11,0.236 c-2.476,0.561-4.565,2.042-5.888,4.171c-1.291,2.079-1.687,4.528-1.115,6.897c0.075,0.308,0.186,0.605,0.33,0.888l9.867,19.229 l-9.909,20.467c-0.124,0.258-0.221,0.527-0.288,0.805c-0.571,2.369-0.176,4.818,1.114,6.896c1.321,2.129,3.411,3.611,5.89,4.174 C33.361,66.92,34.07,67,34.777,67c4.199,0,7.832-2.705,8.985-6.631l11.036-23.803c0.437-0.694,0.647-1.502,0.609-2.313 c-0.013-0.711-0.219-1.411-0.594-2.025L43.75,9.585C42.581,5.684,38.962,3,34.779,3L34.779,3z"></path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
             </div>
+
+
+
+            <!--<div class="quoteText" style="display: flex; flex-direction: column; width: 90%; justify-content: center; height: 100%">
+                “Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.”
+                <br>
+                ―
+                <span class="authorOrTitle">
+                        Mae West
+                    </span>
+            </div>-->
 
 
         </div>
@@ -175,6 +243,119 @@
     const appBtn = document.querySelector("#app-btn");
     const holidayText = document.querySelector("#holiday-text");
     const appTitle = document.querySelector("#app-title");
+    const quoteBox = document.querySelector("#quoteBox");
+    const prevQuote = document.querySelector("#prevQuote");
+    const nextQuote = document.querySelector("#nextQuote");
+    const quoteWrapper = document.querySelector("#quoteWrapper");
+    const nvm = document.querySelector("#nvm");
+
+    const quotesHandler = (quoteIntervalClose = true) => {
+        /*let quotes = [
+            {
+                "quote": "Life isn’t about getting and having, it’s about giving and being.", "author": "Kevin Kruse"
+            },
+            {
+                "quote": "Whatever the mind of man can conceive and believe, it can achieve.", "author": "Napoleon Hill"
+            },
+            {
+                "quote": "Strive not to be a success, but rather to be of value.", "author": "Albert Einstein"
+            },
+            {
+                "quote": "Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.",
+                "author": "Robert Frost"
+            },
+            {
+                "quote": "I attribute my success to this: I never gave or took any excuse.",
+                "author": "Florence Nightingale"
+            }
+        ];*/
+
+        let quotes = window.electron.quotes;
+
+        const makeArrRandom = () => {
+
+            const randomArr = new Set();
+            const quoteLen = quotes.length;
+            while (randomArr.size < quoteLen) {
+                let randNum = Math.floor(Math.random() * quoteLen);
+                randomArr.add(randNum);
+            }
+
+            //console.log(Array.from(randomArr));
+            return Array.from(randomArr);
+        }
+
+        const quoteBoxFn = (randomQuoteIndex) => {
+            quoteBox.querySelector('.quoteText').innerHTML = quotes[randomQuoteIndex].quote
+            quoteBox.querySelector('.authorOrTitle').innerHTML = quotes[randomQuoteIndex].author
+        }
+
+        const randomArr = makeArrRandom();
+
+        quoteBoxFn(randomArr[0] ?? randomArr[0]);
+
+        let quoteSprint = 0;
+
+        const nextQuoteFn = () => {
+            quoteSprint++;
+            if (quoteSprint > quotes.length - 1) {
+                quoteSprint = 0;
+            }
+            //console.log(quoteSprint)
+            quoteBoxFn(randomArr[quoteSprint])
+        }
+
+        const prevQuoteFn = () => {
+            quoteSprint--;
+            if (quoteSprint < 0) {
+                quoteSprint = quotes.length-1;
+            }
+            //console.log(quoteSprint)
+            quoteBoxFn(randomArr[quoteSprint])
+        }
+
+        nextQuote.addEventListener('click', nextQuoteFn);
+        prevQuote.addEventListener('click', prevQuoteFn);
+
+
+        let quoteInter = setInterval(()=>{
+            //quoteText authorOrTitle
+
+            //console.log({quoteSprint}, quotes.length)
+            const randomQuote = randomArr[quoteSprint];
+            //console.log(randomQuote)
+
+            quoteBoxFn(randomQuote);
+
+            quoteSprint++;
+
+            if (quoteSprint === quotes.length) {
+                quoteSprint = 0;
+                console.log('--')
+            }
+
+        }, 3000);
+
+        if (quoteIntervalClose) {
+            clearInterval(quoteInter);
+        }
+
+        let initDone = true;
+
+        return initDone;
+    }
+
+    //window.electron.preferences.plugin.selectPlugin
+    let initDone = false;
+    if (window.electron.preferences.plugin.selectPlugin === 'quote') {
+        quoteWrapper.style.display = 'block';
+        initDone = quotesHandler(false);
+    } else {
+        initDone = false;
+        nvm.style.display = 'block';
+    }
+
+    //quote.innerHTML = 'ddddddddddd'
 
     const appInitOrUpdate = (updatedPreferences = null) => {
         let preferences = window.electron.preferences;
@@ -186,7 +367,19 @@
     }
 
     document.addEventListener("prefUpdated", (e) => {
-        appInitOrUpdate(e.detail.preferences);
+        let preferences = e.detail.preferences;
+        appInitOrUpdate(preferences);
+
+        if (preferences.plugin.selectPlugin === 'quote') {
+            quoteWrapper.style.display = 'block';
+            nvm.style.display = 'none';
+
+            initDone || quotesHandler(false);
+        } else {
+            nvm.style.display = 'block';
+            quoteWrapper.style.display = 'none';
+            quotesHandler();
+        }
     });
 
 
@@ -294,7 +487,6 @@
     appInitOrUpdate();
 
     showHoliday();
-
 
 </script>
 

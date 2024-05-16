@@ -165,6 +165,7 @@ const preferences = new ElectronPreferences({
   // Provide a custom CSS file, relative to your appPath.
   css: 'src/css/preference-styles.css',
 
+  //C:\Users\tanvi\AppData\Roaming\My Work Station!
   // Preference file path. Where your preferences are saved (required)
   dataStore: path.join(app.getPath("userData"), 'preferences.json'),
 
@@ -173,6 +174,9 @@ const preferences = new ElectronPreferences({
   defaults: {
     general: {
       title: "💖 My Work Station!",
+    },
+    plugin: {
+      "selectPlugin": "quote"
     },
     timer: {
       interval: 30,
@@ -230,7 +234,7 @@ const preferences = new ElectronPreferences({
     {
       id: 'timer',
       label: 'Timer',
-      icon: 'turtle', // See the list of available icons below
+      icon: 'bell-53', // See the list of available icons below
       form: {
         groups: [
           {
@@ -305,7 +309,20 @@ const preferences = new ElectronPreferences({
       form: {
         groups: [
           {
-            label: 'Plugin Name', // optional
+            label: 'Select Plugin',
+            fields: [
+              {
+                key: 'selectPlugin',
+                type: "radio",
+                options: [
+                  {label: "Quotes - Change your Life !", value: 'quote'},
+                  {label: "NVM (Node Version Manager)", value: 'nvm'}
+                ],
+                help: 'Select plugin that show in your Interface'
+              }
+            ],
+          },
+          {
             fields: [
               {
                 label: 'Add Plugin',
@@ -316,7 +333,6 @@ const preferences = new ElectronPreferences({
               // ...
             ]
           },
-          // ...
         ]
       }
     }

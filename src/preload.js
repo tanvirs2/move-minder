@@ -92,7 +92,7 @@ contextBridge.exposeInMainWorld("electron", {
     preferences: preferences,
     savePreferences: savePreferences,
     saveQuickIcon: saveQuickIcon,
-    quotes: quotes,
+    quotes: quotes.quotes,
     //nodeVersion_List: () => ipcRenderer.send('node-version-list', payload),
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
