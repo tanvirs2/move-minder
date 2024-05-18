@@ -1,8 +1,8 @@
 {
-  "name": "my-work-station",
-  "productName": "My Work Station!",
-  "version": "0.0.9",
-  "description": "My Electron application description",
+  "name": "move-minder",
+  "productName": "Move Minder!",
+  "version": "0.1.1",
+  "description": "Boost Your Productivity with your own time rules!",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -25,11 +25,13 @@
   "keywords": [],
   "author": {
     "name": "Tanvir Sarker",
-    "email": "tanvir.sarker@sourcetop.com"
+    "email": "tanvir603@gmail.com",
+    "email2": "tanvir.sarker@sourcetop.com"
   },
   "license": "MIT",
   "dependencies": {
     "chartjs": "^0.3.24",
+    "electron-is-dev": "^3.0.1",
     "electron-preferences": "^2.8.2",
     "electron-squirrel-startup": "^1.0.0",
     "js-circle-progress": "^1.0.0-beta.0",

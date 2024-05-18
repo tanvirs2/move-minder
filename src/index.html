@@ -221,7 +221,7 @@
         font-size: 12px;
         text-wrap: nowrap;
       " id="app-btn">
-                <img style="height: 50px" src="./assets/imgs/laragon.png" alt="Run laragon app">
+                <img style="height: 50px" src="./assets/imgs/laragon.png">
                 <p style="text-transform: capitalize">Laragon</p>
             </div>
 
@@ -236,6 +236,7 @@
 <script>
 
     //window.electron.preferences.quick_icon.app_name
+    const isDev = window.electron.isDev;
 
     const toggleFileShortcut = document.querySelector("#toggle-file-shortcut");
     const dropArea = document.querySelector("#drop-area");
@@ -334,7 +335,7 @@
                 console.log('--')
             }
 
-        }, 3000);
+        }, 10000);
 
         if (quoteIntervalClose) {
             clearInterval(quoteInter);
@@ -429,7 +430,11 @@
             let filename = elm.replace(/^.*[\\/]/, '');
             const cloneAppBtn = appBtn.cloneNode(true);
             cloneAppBtn.style.display = 'flex'
-            cloneAppBtn.querySelector('img').src = `assets/imgs/icons/${filename}.png`
+            if (isDev) {
+                cloneAppBtn.querySelector('img').src = `assets/imgs/icons/${filename}.png`;
+            } else {
+                cloneAppBtn.querySelector('img').src = `./../../../icons/${filename}.png`;
+            }
             let filenameSplit = filename.split('.');
             let fileExt = filenameSplit.pop();
             let filenameSplitJoin = filenameSplit.join(".");

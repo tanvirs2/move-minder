@@ -4,6 +4,10 @@ const { app, contextBridge, ipcMain, ipcRenderer } = require('electron');
 const quotes = require('./assets/quotes/quotes.json');
 
 //console.log(quotes);
+//console.log(process.argv[0].includes("WorkStation"));
+
+const isDev = process.argv[0].includes("WorkStation");
+
 
 // Fetch the preferences object
 const preferences = ipcRenderer.sendSync('getPreferences');
@@ -17,7 +21,9 @@ ipcRenderer.on('preferencesUpdated', (e, preferences) => { // Listen to the `pre
             preferences,
         },
     });
-    document.dispatchEvent(prefUpdatedEvent);
+    setTimeout(() => {
+        document.dispatchEvent(prefUpdatedEvent);
+    }, 500);
 });
 
 
@@ -90,6 +96,7 @@ contextBridge.exposeInMainWorld("electron", {
     //createFileIconFromPath: (payload) => ipcRenderer.send('createFileIconFromPath', payload),
     //timeSettings: preferences.timer,
     preferences: preferences,
+    isDev: isDev,
     savePreferences: savePreferences,
     saveQuickIcon: saveQuickIcon,
     quotes: quotes.quotes,

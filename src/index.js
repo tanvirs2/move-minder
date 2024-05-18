@@ -3,8 +3,20 @@ const ElectronPreferences = require('electron-preferences');
 const path = require('path');
 const fs = require("fs/promises");
 
+const isDevelopment = !app.isPackaged;
+
 const subProcess = require('child_process');
 const {exec} = require("child_process");
+const fs_noPromise = require("fs");
+
+console.log({isPackaged: app.isPackaged});
+console.log({isDevelopment})
+console.log(path.parse(app.getPath('exe')).dir + '\\assets\\imgs\\icons\\')
+
+
+//console.log({getPath: app.getPath('exe')});
+//console.log({getPath: path.parse(app.getPath('exe')).dir});
+//console.log({getPath: path.join(path.parse(app.getPath('exe')).dir, 'dependencies', 'cleaner.py')});
 
 
 //const CircleProgress = require('js-circle-progress');
@@ -12,6 +24,16 @@ const {exec} = require("child_process");
 
 // Create an instance of CircleProgress element
 //const cp = CircleProgress();
+
+const appDir = path.parse(app.getPath('exe')).dir;
+
+if (!isDevelopment) {
+  if (!fs_noPromise.existsSync(appDir + '/icons')) {
+    console.log('not found');
+    fs.mkdir(appDir + '/icons');
+  };
+}
+
 
 ipcMain.handle('getSettings', () => {
   return 'abcdef'
@@ -21,9 +43,16 @@ const createFileIconFromPath = async (fileFullPath) => {
   //console.log({filename})
   //fs.writeFileSync(__dirname + `/images/img-${filePath}.png`, fileIcon.toPNG())
   //await fs.unlink(tempFile); // delete temp file
+  let iconsPath = "";
+  //console.log({isDevelopment})
+  if (isDevelopment) {
+    iconsPath = __dirname + '/assets/imgs/icons/';
+  } else {
+    iconsPath = appDir + '/icons/';
+  }
   var filename = path.parse(fileFullPath).base;
   const image = await app.getFileIcon(fileFullPath, {size: 'large'}); // get file icon of temp file
-  const tempFile = path.join(__dirname +'/assets/imgs/icons/', filename+'.png');
+  const tempFile = path.join(iconsPath, filename+'.png');
   await fs.writeFile(tempFile, image.toPNG()); // create empty temp file
   return tempFile;
 };
@@ -174,6 +203,12 @@ const preferences = new ElectronPreferences({
   defaults: {
     general: {
       title: "💖 My Work Station!",
+      path: {
+        isPackaged: app.isPackaged,
+        getPath1: app.getPath('exe'),
+        getPath2: path.parse(app.getPath('exe')).dir,
+        getPath3: path.join(path.parse(app.getPath('exe')).dir, 'dependencies', 'cleaner.py'),
+      },
     },
     plugin: {
       "selectPlugin": "quote"
@@ -350,7 +385,7 @@ const createWindow = () => {
     //icon: __dirname + './assets/imgs/logo/logo.png',
     icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
-      devTools :  true,
+      devTools :  false,
       nodeIntegration:  true,
       //contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
