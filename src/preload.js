@@ -3,8 +3,6 @@
 const { app, contextBridge, ipcMain, ipcRenderer } = require('electron');
 const quotes = require('./assets/quotes/quotes.json');
 
-//console.log(quotes);
-//console.log(process.argv[0].includes("WorkStation"));
 
 const isDev = process.argv[0].includes("WorkStation");
 
@@ -46,45 +44,6 @@ const saveQuickIcon = (appPath) => {
     return [...appSet];
 }
 
-/*const appArray = [
-    {
-        name: 'laragon',
-        logo: 'laragon.png',
-    },
-    {
-        name: 'sourcetree',
-        logo: 'sourcetree.png',
-    },
-    {
-        name: 'phpstorm',
-        logo: 'phpstorm.png',
-    },
-    {
-        name: 'clock',
-        logo: 'clock.png',
-    },
-    {
-        name: 'note',
-        logo: 'note.png',
-    },
-    {
-        name: 'AULA',
-        logo: 'aula.jpeg',
-    }
-];
-
-let bridges = appArray.reduce((prev, curr) => {
-    let currModify = {[curr.name]: () => ipcRenderer.send(`${curr.name}_app_run`)};
-    return {...prev, ...currModify};
-} , {});*/
-
-
-/*let bridges = appArray.map(item=> {
-    console.log(item)
-    return {
-        [item.name]: () => ipcRenderer.send(`${item.name}_app_run`),
-    }
-});*/
 
 contextBridge.exposeInMainWorld("electron", {
     //loadExplorer: () => ipcRenderer.send('loadExplorer'),
@@ -104,6 +63,7 @@ contextBridge.exposeInMainWorld("electron", {
     getSettings: () => ipcRenderer.invoke('getSettings'),
     nodeVersionList: () => ipcRenderer.invoke('nodeVersionList'),
     createFileIconFromPath: (payload) => ipcRenderer.invoke('createFileIconFromPath', payload),
+    timerRemainStopNotify: (payload) => ipcRenderer.invoke('timerRemainStopNotify', payload),
     iconRun: (payload) => ipcRenderer.invoke('iconRun', payload),
     //laragon_app_run: () => ipcRenderer.send('laragon_app_run'),
     //...bridges

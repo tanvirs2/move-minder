@@ -7,6 +7,9 @@ let distance;
 let focusToggle;
 let play;
 let intvStart;
+let intvReminderStart;
+let isIntvReminderStart = true;
+let workerObject = {};
 
 if (dev) {
     interval = .5;
@@ -68,14 +71,19 @@ self.onmessage = function (event) {
 
     if (timeModifyFound) {
         timeModify(time);
-        self.postMessage({timeModify: true, interval: interval + "m " + addZero(0) + "s "})
+        //self.postMessage({isIntvReminderStart:'fff', timeModify: true, interval: interval + "m " + addZero(0) + "s "})
     }
 
     if (playKeyFound) {
         if (play) {
             timeStart();
+            clearInterval(intvReminderStart);
+            isIntvReminderStart = false;
+            console.log(' intvReminderStart clear ')
         } else {
             clearInterval(intvStart);
+            isIntvReminderStart = true;
+            reminderTimeStart()
         }
     }
 
@@ -90,17 +98,15 @@ function timeStart(){
 
         //('0' + minutes).slice(-2)
 
-
-        self.postMessage({
-            timer: addZero(minutes) + "m " + addZero(seconds) + "s ",
+        workerObject = {...workerObject, isIntvReminderStart, timer: addZero(minutes) + "m " + addZero(seconds) + "s ",
             focusToggle,
             distance,
             focus,
             play,
             interval,
-            rest
-        });
-        //self.postMessage(seconds);
+            rest};
+
+        self.postMessage(workerObject);
 
         distance = distance - 1000;
 
@@ -117,3 +123,22 @@ function timeStart(){
     }, 1000);
 }
 
+function reminderTimeStart() {
+    console.log('start')
+    intvReminderStart = setInterval(()=>{
+
+        console.log('ddddddddd')
+        /*
+        * As main timer not started so time object not created yet here
+        * */
+        if (Object.keys(workerObject).length) {
+            workerObject = {...workerObject, isIntvReminderStart};
+
+            console.log('start main timer', isIntvReminderStart)
+
+            self.postMessage(workerObject);
+        }
+    }, 3000);
+}
+
+reminderTimeStart();

@@ -41,6 +41,7 @@ focusArea.style.transition = 'background-image 1s';
 let worker;
 let timerSoundRun;
 let playToggle = false;
+let postMessage = {time: 5, timeModifyFound: true};
 
 
 timeIncrease.onclick = function () {
@@ -48,7 +49,7 @@ timeIncrease.onclick = function () {
 		timerSoundRun.pause();
 		timerSoundRun.currentTime = 0;
 	}
-	worker.postMessage({time: 5, timeModifyFound: true});
+	worker.postMessage({...postMessage, time: 5});
 }
 
 timeDecrease.onclick = function () {
@@ -56,7 +57,7 @@ timeDecrease.onclick = function () {
 		timerSoundRun.pause();
 		timerSoundRun.currentTime = 0;
 	}
-	worker.postMessage({time: -5, timeModifyFound: true});
+	worker.postMessage({...postMessage, time: -5});
 }
 
 //timeModify();
@@ -117,11 +118,21 @@ worker = new Worker('js/timer_worker.js', {name: JSON.stringify(settings)});
 //worker.postMessage(settings);
 
 worker.onmessage = function (event) {
-	const {timer, focusToggle, distance, focus, rest, interval, timeModify} = event.data;
+	const {timer, focusToggle, distance, focus, rest, interval, timeModify, isIntvReminderStart} = event.data;
+	console.log({isIntvReminderStart})
 	if (timeModify) {
+		console.log({timeModify})
 		demo.innerHTML = interval;
 		return 0;
 	}
+
+	/*
+	* when timer off app will remind user to start timer
+	* */
+	if (isIntvReminderStart) {
+		window.electron.timerRemainStopNotify();
+	}
+
 	let progress_0to1 = distance / minuteToMillisecond(focusToggle ? focus : rest);
 	let progress = 100 - Math.round(progress_0to1 * 100);
 

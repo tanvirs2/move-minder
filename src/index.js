@@ -2,16 +2,47 @@ const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
 const ElectronPreferences = require('electron-preferences');
 const path = require('path');
 const fs = require("fs/promises");
+const AutoLaunch = require('auto-launch');
 
-const isDevelopment = !app.isPackaged;
 
 const subProcess = require('child_process');
 const {exec} = require("child_process");
 const fs_noPromise = require("fs");
+const { Notification } = require('electron')
 
-console.log({isPackaged: app.isPackaged});
+const timerRemainStopNotify = ()=>{
+  const NOTIFICATION_TITLE = 'Your timer is not Running'
+  const NOTIFICATION_BODY = 'For boost your productivity and make health better you have to obey rules'
+
+  new Notification({
+    title: NOTIFICATION_TITLE,
+    body: NOTIFICATION_BODY
+  }).show()
+}
+
+let autoLauncher = new AutoLaunch({
+  name: "MoveMinder"
+});
+
+
+const isDevelopment = !app.isPackaged;
+
+/*console.log({isPackaged: app.isPackaged});
 console.log({isDevelopment})
-console.log(path.parse(app.getPath('exe')).dir + '\\assets\\imgs\\icons\\')
+console.log(path.parse(app.getPath('exe')).dir + '\\assets\\imgs\\icons\\')*/
+
+// Checking if autoLaunch is enabled, if not then enabling it.
+
+if (!isDevelopment) {
+  autoLauncher.isEnabled().then(function(isEnabled) {
+    console.log({isEnabled})
+    if (isEnabled) return;
+    autoLauncher.enable();
+  }).catch(function (err) {
+    throw err;
+  });
+}
+
 
 
 //console.log({getPath: app.getPath('exe')});
@@ -76,6 +107,7 @@ const iconRun = (fileFullPath) => {
 };
 
 ipcMain.handle("createFileIconFromPath", (event, fullPath) => createFileIconFromPath(fullPath))
+ipcMain.handle("timerRemainStopNotify", () => timerRemainStopNotify())
 ipcMain.handle("iconRun", (event, fullPath) => iconRun(fullPath))
 
 
@@ -385,7 +417,7 @@ const createWindow = () => {
     //icon: __dirname + './assets/imgs/logo/logo.png',
     icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
-      devTools :  false,
+      devTools :  true,
       nodeIntegration:  true,
       //contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
