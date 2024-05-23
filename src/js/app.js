@@ -119,19 +119,23 @@ worker = new Worker('js/timer_worker.js', {name: JSON.stringify(settings)});
 
 worker.onmessage = function (event) {
 	const {timer, focusToggle, distance, focus, rest, interval, timeModify, isIntvReminderStart} = event.data;
-	console.log({isIntvReminderStart})
-	if (timeModify) {
-		console.log({timeModify})
-		demo.innerHTML = interval;
-		return 0;
-	}
+	console.log(event.data)
 
 	/*
 	* when timer off app will remind user to start timer
 	* */
 	if (isIntvReminderStart) {
 		window.electron.timerRemainStopNotify();
+		return 0;
 	}
+
+	if (timeModify) {
+		console.log({timeModify})
+		demo.innerHTML = interval;
+		return 0;
+	}
+
+
 
 	let progress_0to1 = distance / minuteToMillisecond(focusToggle ? focus : rest);
 	let progress = 100 - Math.round(progress_0to1 * 100);

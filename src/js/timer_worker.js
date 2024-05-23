@@ -71,7 +71,7 @@ self.onmessage = function (event) {
 
     if (timeModifyFound) {
         timeModify(time);
-        //self.postMessage({isIntvReminderStart:'fff', timeModify: true, interval: interval + "m " + addZero(0) + "s "})
+        self.postMessage({timeModify: true, interval: interval + "m " + addZero(0) + "s "})
     }
 
     if (playKeyFound) {
@@ -89,7 +89,10 @@ self.onmessage = function (event) {
 
 }
 
-const addZero = (num) => ('0' + num).slice(-2)
+function addZero(num) {
+    return ('0' + num).slice(-2);
+}
+//const addZero = (num) => ('0' + num).slice(-2)
 
 function timeStart(){
     intvStart = setInterval(()=>{
@@ -98,13 +101,16 @@ function timeStart(){
 
         //('0' + minutes).slice(-2)
 
-        workerObject = {...workerObject, isIntvReminderStart, timer: addZero(minutes) + "m " + addZero(seconds) + "s ",
+        workerObject = {
+            ...workerObject,
+            timer: addZero(minutes) + "m " + addZero(seconds) + "s ",
             focusToggle,
             distance,
             focus,
             play,
             interval,
-            rest};
+            rest
+        };
 
         self.postMessage(workerObject);
 
@@ -127,18 +133,12 @@ function reminderTimeStart() {
     console.log('start')
     intvReminderStart = setInterval(()=>{
 
-        console.log('ddddddddd')
+        //console.log({isIntvReminderStart, ...workerObject})
         /*
         * As main timer not started so time object not created yet here
         * */
-        if (Object.keys(workerObject).length) {
-            workerObject = {...workerObject, isIntvReminderStart};
-
-            console.log('start main timer', isIntvReminderStart)
-
-            self.postMessage(workerObject);
-        }
-    }, 3000);
+        self.postMessage({isIntvReminderStart});
+    }, 300000);
 }
 
 reminderTimeStart();

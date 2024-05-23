@@ -417,7 +417,7 @@ const createWindow = () => {
     //icon: __dirname + './assets/imgs/logo/logo.png',
     icon: path.join(__dirname, 'assets/imgs/logo/logo.png'),
     webPreferences: {
-      devTools :  true,
+      devTools : !!isDevelopment,
       nodeIntegration:  true,
       //contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
