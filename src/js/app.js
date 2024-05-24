@@ -125,7 +125,21 @@ worker.onmessage = function (event) {
 	* when timer off app will remind user to start timer
 	* */
 	if (isIntvReminderStart) {
-		window.electron.timerRemainStopNotify();
+		//window.electron.timerRemainStopNotify();
+
+		const NOTIFICATION_TITLE = 'Your timer is not Running'
+		const NOTIFICATION_BODY = 'For boost your productivity and make health better you have to obey rules'
+
+		var options = {
+			body: NOTIFICATION_BODY,
+			icon: "./assets/imgs/notify-clock-svgrepo-com.svg",
+			silent: true,
+			dir: "ltr"
+		};
+		new Notification(NOTIFICATION_TITLE, options);
+
+		let audio = audioPlay('./assets/sounds/timer_notify.mp3');
+		audio.volume = 0.4;
 		return 0;
 	}
 

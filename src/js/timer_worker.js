@@ -130,7 +130,11 @@ function timeStart(){
 }
 
 function reminderTimeStart() {
-    console.log('start')
+    let delay = 300000; // 5mnts
+    //delay = 10000; // 5sec
+
+    //console.log('start')
+
     intvReminderStart = setInterval(()=>{
 
         //console.log({isIntvReminderStart, ...workerObject})
@@ -138,7 +142,7 @@ function reminderTimeStart() {
         * As main timer not started so time object not created yet here
         * */
         self.postMessage({isIntvReminderStart});
-    }, 300000);
+    }, delay);
 }
 
 reminderTimeStart();

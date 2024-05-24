@@ -16,7 +16,9 @@ const timerRemainStopNotify = ()=>{
 
   new Notification({
     title: NOTIFICATION_TITLE,
-    body: NOTIFICATION_BODY
+    body: NOTIFICATION_BODY,
+    icon: 'https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?    auto=compress&cs=tinysrgb&dpr=1&w=500',
+    silent: true
   }).show()
 }
 
