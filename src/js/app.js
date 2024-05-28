@@ -1,32 +1,18 @@
 let dev = false;
 const settings = {settings: {timeSettings: window.electron.preferences.timer}};
 
-
-window.addEventListener('DOMContentLoaded', () => {
-
-});
-
 document.addEventListener('thumbBtnClick', (e)=>{
-	console.log(e.detail)
 	switch (e.detail.action) {
 		case "reset":
 			window.location.reload();
-			/*window.addEventListener('loaded', () => {
-				alert('a')
-			});
-			playToggleHandler();*/
 			break;
-
 		case "fast-forward-rev":
 			timeDecreaseHandler()
 			break;
-
 		case "fast-forward":
 			timeIncreaseHandler()
 			break;
-
 		default: playToggleHandler();
-
 	}
 });
 
@@ -66,6 +52,10 @@ let worker;
 let timerSoundRun;
 let playToggle = false;
 let postMessage = {time: 5, timeModifyFound: true};
+
+window.addEventListener('DOMContentLoaded', () => {
+	window.electron.playPauseUIHandler(playToggle)
+});
 
 function timeIncreaseHandler() {
 	if (timerSoundRun) {
