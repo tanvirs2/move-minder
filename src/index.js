@@ -148,8 +148,7 @@ function nodeVersionChangeHandler(data) {
 }
 
 
-
-
+ipcMain.on('playPauseUIHandler', (event, isPlay)=>updateButtonIcon(!isPlay));
 ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
 //ipcMain.on("timeProgress", (event, data) => timeProgress(data))
 ipcMain.on("minimizeCMD", (event, data) => subProcess.spawn(minimizeCMD, { shell: true, stdio: 'inherit' }))
@@ -416,9 +415,70 @@ const preferences = new ElectronPreferences({
   ]
 })
 
+let mainWindow;
+
+function thumbBtnsSpawner(play) {
+
+  const iconSimpler = icon => nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/${icon}`))
+
+  let playObj = {
+    tooltip: 'Timer start',
+    icon: iconSimpler('play.png'),
+    click() {
+      //thisObj.thumbBtns.play = !thisObj.thumbBtns.play
+      mainWindow.webContents.send('timer_btns', {action: 'pause'});
+      updateButtonIcon(false)
+    }
+  };
+
+  let pauseObj = {
+    tooltip: 'Timer pause',
+    icon: iconSimpler('pause.png'),
+    click() {
+      mainWindow.webContents.send('timer_btns', {action: 'play'});
+      updateButtonIcon(true)
+    }
+  };
+
+  let dynamicBtn = play ? playObj : pauseObj;
+
+  return [
+    {
+      tooltip: 'Timer reset',
+      icon: iconSimpler('reset.png'),
+      click() {
+        mainWindow.webContents.send('timer_btns', {action: 'reset'});
+      }
+    },
+    {
+      tooltip: '-5',
+      icon: iconSimpler('fast-forward-rev.png'),
+      click() {
+        mainWindow.webContents.send('timer_btns', {action: 'fast-forward-rev'});
+      }
+    },
+    {
+      ...dynamicBtn
+    },
+    {
+      tooltip: '+5',
+      icon: iconSimpler('fast-forward.png'),
+      click() {
+        mainWindow.webContents.send('timer_btns', {action: 'fast-forward'});
+      }
+    },
+  ];
+}
+
+function updateButtonIcon(isPlay) {
+  mainWindow.setThumbarButtons(
+      thumbBtnsSpawner(isPlay)
+  );
+}
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     frame: true,
@@ -435,87 +495,7 @@ const createWindow = () => {
 
   ipcMain.on("timeProgress", (event, data) => mainWindow.setProgressBar(1-data))
 
-  function thumbBtnsSpawner(play) {
 
-    const iconSimpler = icon => nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/${icon}`))
-
-    let playObj = {
-      tooltip: 'Timer start',
-      //icon: iconSimpler('play.png'),
-      icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/play.png`)),
-      click() {
-        console.log('button1 clicked')
-        //thisObj.thumbBtns.play = !thisObj.thumbBtns.play
-        //mainWindow.webContents.send('timer_start_btn');
-        updateButtonIcon(false)
-      }
-    };
-
-    let pauseObj = {
-      tooltip: 'Timer pause',
-      //icon: iconSimpler('pause.png'),
-      icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/pause.png`)),
-      click() {
-        console.log('button1 clicked')
-        updateButtonIcon(true)
-      }
-    };
-
-    let dynamicBtn = play ? playObj : pauseObj;
-
-    return [
-      {
-        tooltip: 'Timer reset',
-        icon: iconSimpler('reset.png'),
-        click() {
-          console.log('button1 clicked')
-        }
-      },
-      {
-        tooltip: '-5',
-        icon: iconSimpler('fast-forward-rev.png'),
-        click() {
-          console.log('button1 clicked')
-        }
-      },
-      {
-        ...dynamicBtn
-      },
-      {
-        tooltip: '+5',
-        icon: iconSimpler('fast-forward.png'),
-        click() {
-          console.log('button1 clicked')
-        }
-      },
-    ];
-  }
-
-
-  function updateButtonIcon(isPlay) {
-    console.log({isPlay})
-    mainWindow.setThumbarButtons(isPlay ? [
-      {
-        tooltip: 'Timer pause',
-        //icon: iconSimpler('pause.png'),
-        icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/play.png`)),
-        click() {
-          console.log('play clicked')
-          updateButtonIcon(false)
-        }
-      }
-    ]: [
-      {
-        tooltip: 'Timer pause',
-        //icon: iconSimpler('pause.png'),
-        icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/pause.png`)),
-        click() {
-          console.log('pause clicked')
-          updateButtonIcon(true)
-        }
-      }
-    ]);
-  }
 
   updateButtonIcon(true);
 

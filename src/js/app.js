@@ -6,6 +6,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
 });
 
+document.addEventListener('thumbBtnClick', (e)=>{
+	console.log(e.detail)
+	switch (e.detail.action) {
+		case "reset":
+			window.location.reload();
+			/*window.addEventListener('loaded', () => {
+				alert('a')
+			});
+			playToggleHandler();*/
+			break;
+
+		case "fast-forward-rev":
+			timeDecreaseHandler()
+			break;
+
+		case "fast-forward":
+			timeIncreaseHandler()
+			break;
+
+		default: playToggleHandler();
+
+	}
+});
+
 document.getElementById("quick-open").addEventListener('change', function () {
 	fileHandling(this.files[0].path);
 });
@@ -43,8 +67,7 @@ let timerSoundRun;
 let playToggle = false;
 let postMessage = {time: 5, timeModifyFound: true};
 
-
-timeIncrease.onclick = function () {
+function timeIncreaseHandler() {
 	if (timerSoundRun) {
 		timerSoundRun.pause();
 		timerSoundRun.currentTime = 0;
@@ -52,7 +75,7 @@ timeIncrease.onclick = function () {
 	worker.postMessage({...postMessage, time: 5});
 }
 
-timeDecrease.onclick = function () {
+function timeDecreaseHandler() {
 	if (timerSoundRun) {
 		timerSoundRun.pause();
 		timerSoundRun.currentTime = 0;
@@ -60,9 +83,17 @@ timeDecrease.onclick = function () {
 	worker.postMessage({...postMessage, time: -5});
 }
 
+timeIncrease.onclick = function () {
+	timeIncreaseHandler()
+}
+
+timeDecrease.onclick = function () {
+	timeDecreaseHandler()
+}
+
 //timeModify();
 
-play.onclick = function () {
+function playToggleHandler() {
 	playToggle = !playToggle;
 
 	if (timerSoundRun) {
@@ -81,7 +112,13 @@ play.onclick = function () {
 		fondo_btn.style.background = '#00d200';
 	}
 	worker.postMessage({play: playToggle, playKeyFound: true});
-	this.classList.toggle('active');
+	play.classList.toggle('active');
+}
+
+
+play.onclick = function () {
+	playToggleHandler()
+	window.electron.playPauseUIHandler(playToggle)
 }
 
 function audioPlay(src) {

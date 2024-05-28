@@ -25,8 +25,10 @@ ipcRenderer.on('preferencesUpdated', (e, preferences) => { // Listen to the `pre
 });
 
 
-ipcRenderer.on("timer_start_btn", ()=>{
-    console.log('he he he hehe ')
+ipcRenderer.on("timer_btns", (e, action)=>{
+    //console.log({action})
+    const thumbBtnClickEvent = new CustomEvent('thumbBtnClick', {detail: action});
+    document.dispatchEvent(thumbBtnClickEvent);
 });
 
 
@@ -53,6 +55,7 @@ const saveQuickIcon = (appPath) => {
 contextBridge.exposeInMainWorld("electron", {
     //loadExplorer: () => ipcRenderer.send('loadExplorer'),
     //my_send: (channel, payload) => ipcRenderer.send(channel, payload),
+    playPauseUIHandler: (payload) => ipcRenderer.send('playPauseUIHandler', payload),
     nodeVersionChange: (payload) => ipcRenderer.send('nodeVersionChangeRequest', payload),
     minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
     undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
