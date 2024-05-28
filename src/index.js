@@ -494,7 +494,27 @@ const createWindow = () => {
 
   function updateButtonIcon(isPlay) {
     console.log({isPlay})
-    mainWindow.setThumbarButtons(thumbBtnsSpawner(isPlay));
+    mainWindow.setThumbarButtons(isPlay ? [
+      {
+        tooltip: 'Timer pause',
+        //icon: iconSimpler('pause.png'),
+        icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/play.png`)),
+        click() {
+          console.log('play clicked')
+          updateButtonIcon(false)
+        }
+      }
+    ]: [
+      {
+        tooltip: 'Timer pause',
+        //icon: iconSimpler('pause.png'),
+        icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/pause.png`)),
+        click() {
+          console.log('pause clicked')
+          updateButtonIcon(true)
+        }
+      }
+    ]);
   }
 
   updateButtonIcon(true);
