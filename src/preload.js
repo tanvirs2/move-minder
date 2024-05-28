@@ -25,6 +25,11 @@ ipcRenderer.on('preferencesUpdated', (e, preferences) => { // Listen to the `pre
 });
 
 
+ipcRenderer.on("timer_start_btn", ()=>{
+    console.log('he he he hehe ')
+});
+
+
 const savePreferences = (obj) => {}
 
 const saveQuickIcon = (appPath) => {

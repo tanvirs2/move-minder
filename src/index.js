@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, Menu, nativeImage } = require('electron');
 const ElectronPreferences = require('electron-preferences');
 const path = require('path');
 const fs = require("fs/promises");
@@ -9,6 +9,12 @@ const subProcess = require('child_process');
 const {exec} = require("child_process");
 const fs_noPromise = require("fs");
 const { Notification } = require('electron')
+
+const thisObj = {
+  thumbBtns: {
+    play: true
+  }
+};
 
 const timerRemainStopNotify = ()=>{
   const NOTIFICATION_TITLE = 'Your timer is not Running'
@@ -428,6 +434,72 @@ const createWindow = () => {
 
 
   ipcMain.on("timeProgress", (event, data) => mainWindow.setProgressBar(1-data))
+
+  function thumbBtnsSpawner(play) {
+
+    const iconSimpler = icon => nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/${icon}`))
+
+    let playObj = {
+      tooltip: 'Timer start',
+      //icon: iconSimpler('play.png'),
+      icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/play.png`)),
+      click() {
+        console.log('button1 clicked')
+        //thisObj.thumbBtns.play = !thisObj.thumbBtns.play
+        //mainWindow.webContents.send('timer_start_btn');
+        updateButtonIcon(false)
+      }
+    };
+
+    let pauseObj = {
+      tooltip: 'Timer pause',
+      //icon: iconSimpler('pause.png'),
+      icon: nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/pause.png`)),
+      click() {
+        console.log('button1 clicked')
+        updateButtonIcon(true)
+      }
+    };
+
+    let dynamicBtn = play ? playObj : pauseObj;
+
+    return [
+      {
+        tooltip: 'Timer reset',
+        icon: iconSimpler('reset.png'),
+        click() {
+          console.log('button1 clicked')
+        }
+      },
+      {
+        tooltip: '-5',
+        icon: iconSimpler('fast-forward-rev.png'),
+        click() {
+          console.log('button1 clicked')
+        }
+      },
+      {
+        ...dynamicBtn
+      },
+      {
+        tooltip: '+5',
+        icon: iconSimpler('fast-forward.png'),
+        click() {
+          console.log('button1 clicked')
+        }
+      },
+    ];
+  }
+
+
+  function updateButtonIcon(isPlay) {
+    console.log({isPlay})
+    mainWindow.setThumbarButtons(thumbBtnsSpawner(isPlay));
+  }
+
+  updateButtonIcon(true);
+
+
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
