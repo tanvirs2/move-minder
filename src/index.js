@@ -468,10 +468,10 @@ function thumbBtnsSpawner(play) {
       }
     },
     {
-      tooltip: 'Timer reset',
+      tooltip: 'Timer stop',
       icon: iconSimpler('stop.png'),
       click() {
-        mainWindow.webContents.send('timer_btns', {action: 'reset'});
+        mainWindow.webContents.send('timer_btns', {action: 'stop'});
       }
     }
   ];

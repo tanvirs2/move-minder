@@ -4,9 +4,22 @@ const settings = {settings: {timeSettings: window.electron.preferences.timer}};
 document.addEventListener('thumbBtnClick', (e)=>{
 	switch (e.detail.action) {
 		case "reset":
+			console.log(window.location.href, window.location.origin + window.location.origin)
+			//window.location.reload();
+			window.location.href = window.location.origin + window.location.pathname ;
+			break;
+		case "stop":
 			//window.location.reload();
 			console.log(window.location.href)
-			window.location.href = window.location.href + `?taskbar-reset`;
+
+			let url = window.location.href;
+			const urlParams = (new URL(url)).searchParams;
+
+			if (!urlParams.has('timer-stop')) {
+				url = url + `?timer-stop`;
+			}
+
+			window.location.href = url;
 			break;
 		case "fast-forward-rev":
 			timeDecreaseHandler()
@@ -57,7 +70,13 @@ let postMessage = {time: 5, timeModifyFound: true};
 
 window.addEventListener('DOMContentLoaded', (e) => {
 	console.log(location.href)
-	playToggleHandler();
+	//timer-stop search
+
+	//const urlParams = new URLSearchParams();
+	const urlParams = (new URL(location.href)).searchParams;
+	if (!urlParams.has('timer-stop')) {
+		playToggleHandler();
+	}
 	window.electron.playPauseTaskbarUIHandler(playToggle);
 });
 
