@@ -4,7 +4,9 @@ const settings = {settings: {timeSettings: window.electron.preferences.timer}};
 document.addEventListener('thumbBtnClick', (e)=>{
 	switch (e.detail.action) {
 		case "reset":
-			window.location.reload();
+			//window.location.reload();
+			console.log(window.location.href)
+			window.location.href = window.location.href + `?taskbar-reset`;
 			break;
 		case "fast-forward-rev":
 			timeDecreaseHandler()
@@ -53,8 +55,10 @@ let timerSoundRun;
 let playToggle = false;
 let postMessage = {time: 5, timeModifyFound: true};
 
-window.addEventListener('DOMContentLoaded', () => {
-	window.electron.playPauseUIHandler(playToggle)
+window.addEventListener('DOMContentLoaded', (e) => {
+	console.log(location.href)
+	playToggleHandler();
+	window.electron.playPauseTaskbarUIHandler(playToggle);
 });
 
 function timeIncreaseHandler() {
@@ -108,7 +112,7 @@ function playToggleHandler() {
 
 play.onclick = function () {
 	playToggleHandler()
-	window.electron.playPauseUIHandler(playToggle)
+	window.electron.playPauseTaskbarUIHandler(playToggle)
 }
 
 function audioPlay(src) {

@@ -148,7 +148,7 @@ function nodeVersionChangeHandler(data) {
 }
 
 
-ipcMain.on('playPauseUIHandler', (event, isPlay)=>updateButtonIcon(!isPlay));
+ipcMain.on('playPauseUIHandler', (event, isPlay)=> updateButtonIcon(!isPlay));
 ipcMain.on("nodeVersionChangeRequest", (event, data) => nodeVersionChangeHandler(data))
 //ipcMain.on("timeProgress", (event, data) => timeProgress(data))
 ipcMain.on("minimizeCMD", (event, data) => subProcess.spawn(minimizeCMD, { shell: true, stdio: 'inherit' }))
@@ -467,6 +467,13 @@ function thumbBtnsSpawner(play) {
         mainWindow.webContents.send('timer_btns', {action: 'fast-forward'});
       }
     },
+    {
+      tooltip: 'Timer reset',
+      icon: iconSimpler('stop.png'),
+      click() {
+        mainWindow.webContents.send('timer_btns', {action: 'reset'});
+      }
+    }
   ];
 }
 

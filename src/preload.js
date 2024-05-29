@@ -55,7 +55,7 @@ const saveQuickIcon = (appPath) => {
 contextBridge.exposeInMainWorld("electron", {
     //loadExplorer: () => ipcRenderer.send('loadExplorer'),
     //my_send: (channel, payload) => ipcRenderer.send(channel, payload),
-    playPauseUIHandler: (payload) => ipcRenderer.send('playPauseUIHandler', payload),
+    playPauseTaskbarUIHandler: (payload) => ipcRenderer.send('playPauseUIHandler', payload),
     nodeVersionChange: (payload) => ipcRenderer.send('nodeVersionChangeRequest', payload),
     minimizeCMD: (payload) => ipcRenderer.send('minimizeCMD', payload),
     undoMinimizeAll: (payload) => ipcRenderer.send('undoMinimizeAll', payload),
