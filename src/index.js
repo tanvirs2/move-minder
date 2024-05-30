@@ -421,27 +421,6 @@ function thumbBtnsSpawner(play) {
 
   const iconSimpler = icon => nativeImage.createFromPath(path.join(__dirname, `assets/imgs/logo/${icon}`))
 
-  let playObj = {
-    tooltip: 'Timer start',
-    icon: iconSimpler('play.png'),
-    click() {
-      //thisObj.thumbBtns.play = !thisObj.thumbBtns.play
-      mainWindow.webContents.send('timer_btns', {action: 'pause'});
-      updateButtonIcon(false)
-    }
-  };
-
-  let pauseObj = {
-    tooltip: 'Timer pause',
-    icon: iconSimpler('pause.png'),
-    click() {
-      mainWindow.webContents.send('timer_btns', {action: 'play'});
-      updateButtonIcon(true)
-    }
-  };
-
-  let dynamicBtn = play ? playObj : pauseObj;
-
   return [
     {
       tooltip: 'Timer reset',
@@ -458,7 +437,23 @@ function thumbBtnsSpawner(play) {
       }
     },
     {
-      ...dynamicBtn
+      tooltip: 'Timer start',
+      icon: iconSimpler('play.png'),
+      click() {
+        //thisObj.thumbBtns.play = !thisObj.thumbBtns.play
+        mainWindow.webContents.send('timer_btns', {action: 'pause'});
+        updateButtonIcon(false)
+      },
+      flags: !play && ['hidden']
+    },
+    {
+      tooltip: 'Timer pause',
+      icon: iconSimpler('pause.png'),
+      click() {
+        mainWindow.webContents.send('timer_btns', {action: 'play'});
+        updateButtonIcon(true)
+      },
+      flags: play && ['hidden']
     },
     {
       tooltip: '+5',
