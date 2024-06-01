@@ -460,7 +460,7 @@
 
         const d = new Date();
         let currMonth = String(d.getMonth() + 1);
-        let currDate = String(d.getDate());
+        let currDate = ("0"+d.getDate()).slice(-2);
 
         /*currMonth = '5';
         currDate = '22';*/

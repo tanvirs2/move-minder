@@ -1,7 +1,7 @@
 {
   "name": "move-minder",
   "productName": "Move Minder!",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Boost Your Productivity with your own time rules!",
   "main": "src/index.js",
   "scripts": {
