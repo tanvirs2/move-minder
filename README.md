@@ -2,6 +2,8 @@
 
 **Move Minder**  is an application designed to assist individuals who are under excessive pressure and frequently forget to take breaks. Failing to take breaks after 30 minutes can pose health risks in the future. This app addresses this concern by allowing users to set a custom break duration, such as 35 minutes. When the set time elapses, the app will remind the user and forcibly minimize all applications, enabling them to shift their focus away from work and take a break, thereby mitigating potential long-term health issues.
 
+![image](https://github.com/tanvirs2/move-minder/assets/11763906/28e19fc6-d445-476d-bb63-e637fa0127f2)
+
 ## Key Features
 
 1.  **Focus Timer**: Set custom break durations and receive reminders to take breaks.
