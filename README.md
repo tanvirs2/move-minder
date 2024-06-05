@@ -13,3 +13,6 @@
 Remember, taking breaks is essential for maintaining overall well-being. Let  **Move Minder**  help you prioritize self-care! 🌟
 
 ![image](https://github.com/tanvirs2/move-minder/assets/11763906/ae589a4c-af52-4855-afff-453e5a67a1f0)
+
+![image](https://github.com/tanvirs2/move-minder/assets/11763906/7f6dcf64-0047-40ee-aa38-88d8e2737d03)
+
