@@ -11,3 +11,9 @@
 5.  **Quote**: Get inspired with daily motivational quotes.
 
 Remember, taking breaks is essential for maintaining overall well-being. Let  **Move Minder**  help you prioritize self-care! 🌟
+
+![image](https://github.com/tanvirs2/move-minder/assets/11763906/3469a81f-1544-415d-886c-327f4df59047)
+
+![image](https://github.com/tanvirs2/move-minder/assets/11763906/b31c5d23-0fc8-4a2e-b441-b7f130ab1df8)
+
+![image](https://github.com/tanvirs2/move-minder/assets/11763906/46d00559-764d-40da-b902-a8f31d12ac3f)
